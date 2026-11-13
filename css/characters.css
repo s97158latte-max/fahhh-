@@ -1,6 +1,6 @@
 /* 迷因人物 */
 html{overflow-x:hidden}
-.wj{position:absolute;z-index:0;pointer-events:none;mix-blend-mode:multiply;max-width:none}
+.wj{position:absolute;z-index:0;pointer-events:none;mix-blend-mode:multiply;max-width:none;height:auto}
 .hd{position:relative}
 .hd h1,.hd .sub,#up,.row,.note{position:relative;z-index:1}
 .row,.note{background:#fff}

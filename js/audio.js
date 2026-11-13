@@ -104,6 +104,7 @@
     /* 單聲道:任何音效觸發時,先淡出並停止目前所有聲音,再播新的 */
     function play(s, el) {
         flash(el);
+        if (F.hit) F.hit(s, el);
         if (navigator.vibrate) try { navigator.vibrate(50); } catch (e) { }
         var c = getCtx();
         stopAll();

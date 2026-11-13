@@ -1,0 +1,33 @@
+/* 載入畫面：只在 html.booting 下顯示（沒有 JS 時 boot.js 不會加 class，所以永遠不會出現） */
+html.booting{overflow:hidden}
+#boot{display:none}
+html.booting #boot{position:fixed;top:0;right:0;bottom:0;left:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;box-sizing:border-box;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);background:#fff;color:#000;font-family:'Comic Sans MS','Comic Sans','Iansui','Comic Neue','PingFang TC','Noto Sans TC','Microsoft JhengHei',cursive,sans-serif}
+#boot .sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+#boot .bc{display:flex;flex-direction:column;align-items:center;gap:22px}
+#boot .face{display:block;width:120px;height:120px;animation:bootShake .6s ease-in-out infinite alternate}
+#boot .tear{stroke-dasharray:1;stroke-dashoffset:1;animation:bootTear 1.2s steps(6,end) infinite}
+#boot .tear.r{animation-delay:.5s}
+#boot .bar{box-sizing:border-box;width:min(240px,70vw);height:24px;border:3px solid #000;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;overflow:hidden;background:#fff}
+#boot .fill{height:100%;width:0;background:#000;transition:width .3s steps(5,end)}
+#boot .bar.ind .fill{animation:bootInd 1.6s steps(8,end) infinite}
+#boot .msg{margin:0;min-height:1.5em;padding:0 16px;font-size:17px;line-height:1.5;text-align:center}
+#boot .msg.in{animation:bootFade .3s ease-out}
+#boot .stamp{display:none;position:absolute;top:50%;left:50%;margin:0;font-family:Impact,'Anton','Arial Narrow Bold','Haettenschweiler',sans-serif;font-weight:400;font-size:clamp(48px,20vw,76px);line-height:1;letter-spacing:1px;white-space:nowrap;color:#fff;-webkit-text-stroke:6px #000;paint-order:stroke fill;transform:translate(-50%,-50%) rotate(-6deg)}
+@supports not (paint-order:stroke fill){#boot .stamp{-webkit-text-stroke:0;text-shadow:-3px 0 #000,3px 0 #000,0 -3px #000,0 3px #000,-2px -2px #000,2px -2px #000,-2px 2px #000,2px 2px #000}}
+#boot.stamping .bc{visibility:hidden}
+#boot.stamping .stamp{display:block;animation:bootStamp .22s cubic-bezier(.2,.9,.3,1) both}
+#boot.out{opacity:0;pointer-events:none;transition:opacity .2s linear}
+@keyframes bootShake{from{transform:rotate(-2.5deg) translateX(-3px)}to{transform:rotate(2.5deg) translateX(3px)}}
+@keyframes bootTear{0%{stroke-dashoffset:1;opacity:1}70%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes bootInd{from{width:0}to{width:100%}}
+@keyframes bootFade{from{opacity:0}to{opacity:1}}
+@keyframes bootStamp{from{opacity:0;transform:translate(-50%,-50%) rotate(-6deg) scale(1.4)}to{opacity:1;transform:translate(-50%,-50%) rotate(-6deg) scale(1)}}
+@media (prefers-reduced-motion:reduce){
+  #boot .face{animation:none}
+  #boot .tear{animation:none;stroke-dashoffset:0}
+  #boot .fill{transition:none}
+  #boot .bar.ind .fill{animation:none;width:40%}
+  #boot .msg.in{animation:none}
+  #boot.stamping .stamp{display:none}
+  #boot.stamping .bc{visibility:visible}
+}

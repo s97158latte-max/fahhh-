@@ -111,3 +111,8 @@ svg [fill="#fff"]{fill:var(--bg)}
 @media (prefers-color-scheme:dark){
 :root{--muted:#aaa;--bg:#000;--fg:#fff;--line:#fff;--panel:#0d0d0d;--shadow:#fff;--scrim:rgba(0,0,0,.72);--veil:rgba(0,0,0,.85);--dim:rgba(0,0,0,.78);--ttl-filter:drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff);--wj-filter:none;--wj-blend:normal}
 }
+.legal{max-width:34rem;margin:18px auto 0;padding:0 16px;font-size:.78rem;line-height:1.5;text-align:center;opacity:.65}
+.legal a{color:inherit;text-decoration:underline}
+.row{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.row .nm{user-select:none;-webkit-user-select:none}
+.eq{color:var(--fg)}

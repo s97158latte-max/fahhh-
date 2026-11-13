@@ -41,19 +41,25 @@
                沒有指標事件的 click(鍵盤 Enter/Space、輔助科技)仍照常播放。 */
             var ptr = false, t0 = null, ptrTimer = 0;
             function armPtr() { ptr = true; clearTimeout(ptrTimer); ptrTimer = setTimeout(function () { ptr = false; }, 1000); }
-            p.addEventListener('pointerdown', function (e) {
+            /* 整列都能觸發播放;改名、刪除、釘選、鍵位提示與改名輸入框除外 */
+            function skip(e) {
+                return !!(e.target.closest && e.target.closest('.ren,.del,.eq,.nm-edit,.key')) || !!row.querySelector('.nm-edit');
+            }
+            row.addEventListener('pointerdown', function (e) {
+                if (skip(e)) return;
                 armPtr();
                 if (e.pointerType === 'touch') { t0 = { x: e.clientX, y: e.clientY }; return; }
                 if (e.button !== 0) return;
                 F.play(s, p);
             });
-            p.addEventListener('pointerup', function (e) {
+            row.addEventListener('pointerup', function (e) {
                 if (e.pointerType !== 'touch' || !t0) return;
                 var dx = e.clientX - t0.x, dy = e.clientY - t0.y; t0 = null;
-                if (dx * dx + dy * dy < 100) F.play(s, p);
+                if (dx * dx + dy * dy < 100 && !skip(e)) F.play(s, p);
             });
-            p.addEventListener('pointercancel', function () { t0 = null; ptr = false; });
-            p.addEventListener('click', function () {
+            row.addEventListener('pointercancel', function () { t0 = null; ptr = false; });
+            row.addEventListener('click', function (e) {
+                if (skip(e)) return;
                 if (ptr) { ptr = false; clearTimeout(ptrTimer); return; }
                 F.play(s, p);
             });

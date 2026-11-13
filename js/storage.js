@@ -4,13 +4,13 @@
     F.db = null;
     F.eq = null;
     try { F.eq = JSON.parse(localStorage.getItem('fahhh_eq')); } catch (e) { }
-    if (!Array.isArray(F.eq)) F.eq = F.BUILTIN.map(function (s) { return s.id; });
+    if (!Array.isArray(F.eq)) F.eq = F.BUILTIN.filter(function (s) { return s.pin !== false; }).map(function (s) { return s.id; });
     else {
         /* 舊使用者:自動釘選之後新增的內建音效(只做一次,之後尊重使用者取消釘選) */
         var seen = [];
         try { seen = JSON.parse(localStorage.getItem('fahhh_seen')) || []; } catch (e) { }
         if (!seen.length) seen = ['b1', 'b2', 'b3', 'b4'];
-        F.BUILTIN.forEach(function (s) { if (seen.indexOf(s.id) < 0 && F.eq.indexOf(s.id) < 0) F.eq.push(s.id); });
+        F.BUILTIN.forEach(function (s) { if (s.pin !== false && seen.indexOf(s.id) < 0 && F.eq.indexOf(s.id) < 0) F.eq.push(s.id); });
     }
     try { localStorage.setItem('fahhh_seen', JSON.stringify(F.BUILTIN.map(function (s) { return s.id; }))); } catch (e) { }
 

@@ -15,7 +15,7 @@ created by [邊境部署 EdgeDeploy](https://www.edgedeploy.tw/)
 
 - **內建音效**：`FAHHH!`（音檔）、`Bruh`、`Boom`、`Wah Wah`（用 Web Audio 即時合成）。
 - **釘選**：勾選的音效會出現在右下角小白點展開的輪狀選單，單手也能快速點。
-- **上傳自己的音檔**：可一次選多個。每個檔案上限 10 MB、30 秒，會先試著解碼，壞檔或偽裝副檔名的檔案會被擋下並說明原因。支援 mp3、m4a、wav、aac、flac、caf、ogg（ogg 在 Safari/iOS 可能無法解碼）。
+- **上傳自己的音檔**：可一次選多個。每個檔案上限 10 MB、30 秒，會先試著解碼，壞檔或偽裝副檔名的檔案會被擋下並說明原因。支援 mp3、m4a、wav、aac、flac、caf、ogg（ogg 在 Safari/iOS 可能無法解碼）。電腦版可直接把音檔從 Finder／檔案總管拖進頁面上傳。
 - **改名、刪除可復原**：自訂音效可重新命名；刪除後 6 秒內可復原。
 - **同一時間只播一個音效**：新的音效一觸發，前一個會在約 30 ms 內淡出。
 - **電腦版**：多欄方塊版面、滑鼠懸停回饋，以及鍵盤快捷鍵（見下）。
@@ -122,7 +122,7 @@ js/
 
 - Built-in sounds: `FAHHH!` (an audio file) plus `Bruh`, `Boom` and `Wah Wah` (synthesised with Web Audio).
 - Pin sounds to the quick menu behind the little white dot at the bottom right.
-- Upload your own audio: up to 10 MB and 30 seconds per file, validated by decoding it first. Formats: mp3, m4a, wav, aac, flac, caf, ogg (ogg may not decode on Safari/iOS).
+- Upload your own audio: up to 10 MB and 30 seconds per file, validated by decoding it first. Formats: mp3, m4a, wav, aac, flac, caf, ogg (ogg may not decode on Safari/iOS). On desktop you can also drag audio files straight onto the page.
 - Only one sound plays at a time; a new one cuts the previous one off.
 - Desktop: multi-column tiles, hover feedback, and keyboard shortcuts (`1`–`0`, then `Q`–`P`, for your first 20 pinned sounds).
 - A short picture-based tour on the first visit (replayable from the "?" button); Chinese / English interface with a language switch; works offline and can be added to the home screen.

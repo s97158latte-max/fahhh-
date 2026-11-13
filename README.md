@@ -20,6 +20,7 @@ created by [邊境部署 EdgeDeploy](https://www.edgedeploy.tw/)
 - **同一時間只播一個音效**：新的音效一觸發，前一個會在約 30 ms 內淡出。
 - **電腦版**：多欄方塊版面、滑鼠懸停回饋，以及鍵盤快捷鍵（見下）。
 - **中文 / English**：頁面右上角切換；預設繁體中文，切換後會記住選擇。
+- **深色模式**：跟隨系統外觀（`prefers-color-scheme`），沒有手動切換鈕；維持黑白手繪風格，深色下是黑底白線的反相版。
 - **可離線使用**：service worker 預快取所有檔案；可加入主畫面。
 - **新手導覽**：第一次造訪時以聚光燈和手繪箭頭帶路（共 5 步，每步一個圖示加一句短話：點 ▶ 播放、勾選加入快捷選單、點圓點展開、點按鈕播放，電腦版再提示按鍵盤快捷鍵）；頂部橫幅左側的「?」可隨時重看。
 - **載入畫面**、播放時的震動與音效名稱字泡、「播放中」螢光黃標示、新手導覽，都尊重系統的「減少動態效果」設定。
@@ -129,6 +130,7 @@ js/
 - Upload your own audio: up to 10 MB and 30 seconds per file, validated by decoding it first. Formats: mp3, m4a, wav, aac, flac, caf, ogg (ogg may not decode on Safari/iOS). On desktop you can also drag audio files straight onto the page.
 - Only one sound plays at a time; a new one cuts the previous one off.
 - Desktop: multi-column tiles, hover feedback, and keyboard shortcuts (`1`–`0`, then `Q`–`P`, for your first 20 pinned sounds).
+- Dark mode follows the system appearance (`prefers-color-scheme`); there is no manual toggle.
 - A short picture-based tour on the first visit (replayable from the "?" button); Chinese / English interface with a language switch; works offline and can be added to the home screen.
 - Your sounds are stored in your own browser only (IndexedDB). On iPhone, the Home Screen app and Safari do not share storage.
 

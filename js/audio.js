@@ -105,6 +105,7 @@
     /* 單聲道:任何音效觸發時,先淡出並停止目前所有聲音,再播新的 */
     function play(s, el) {
         flash(el);
+        document.dispatchEvent(new Event('fahhh:play'));
         /* 視覺回饋與「播放中」狀態:長度取 buffer 時長,合成音 700ms,Audio fallback 上限 3 秒 */
         var pb = s.fn ? null : F.buf[s.id];
         var end = F.hit ? F.hit(s, el, s.fn ? 700 : pb ? Math.max(150, pb.duration * 1000) : 3000) : null;

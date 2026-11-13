@@ -75,6 +75,9 @@
                     stroke-linecap="round" />
                 <path d="M13 32q7-8 14 0" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round" />
             </symbol>
+            <symbol id="pin" viewBox="0 0 24 24">
+                <path d="M9 3h6l-1 6 4 4v2H6v-2l4-4zM12 15v6" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            </symbol>
         </defs>
     </svg>
 
@@ -82,13 +85,13 @@
         <h1>fahhh! <svg width="52" height="52">
                 <use href="#wj" />
             </svg></h1>
-        <p class="sub" data-i18n="sub1">迷因總資料庫。勾選「釘選」，右下角的小白點就會長出那顆按鈕 (╥﹏╥)</p>
-        <p class="sub" data-i18n="sub2">沒聲音？先檢查 iPhone 側邊的靜音鍵和音量</p>
-        <p class="sub tip" data-i18n="tip.keys">小技巧：已釘選的迷因可以直接按鍵盤 1～0、Q～P 播放</p>
         <img class="wj" id="wjB" alt="" aria-hidden="true" draggable="false" src="images/wjB.png" width="377" height="582" decoding="async">
     </div>
-    <div class="note" data-i18n="note">(;´Д`) 音檔只存在這個瀏覽器；iPhone 的「主畫面 App」和 Safari 各自獨立，加入主畫面後要重新上傳。</div>
-    <button class="btn" id="up" data-i18n="upload.btn">＋ 上傳新迷因</button>
+    <div class="upRow">
+        <button class="btn" id="up" data-i18n="upload.btn">＋ 上傳</button>
+        <button class="btn" id="storeInfo" type="button" aria-expanded="false" aria-controls="storePanel" aria-label="資料只存在這個瀏覽器" data-i18n-aria="store.aria"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5.5q0-1.5 1.5-1.5h14l5 5v13.5q0 1.5-1.5 1.5h-17.5q-1.5 0-1.5-1.5z"/><path d="M8 4v6h9V4M8 25v-7h11v7"/><circle cx="23" cy="22" r="6" fill="#fff"/><path d="M23 18.7v3.6M23 25v.2" stroke-width="2.6"/></svg></button>
+    </div>
+    <div id="storePanel" role="status" hidden data-i18n="note">(;´Д`) 音檔只存在這個瀏覽器；iPhone 的「主畫面 App」和 Safari 各自獨立，加入主畫面後要重新上傳。</div>
     <div id="upMsg" role="status" aria-live="polite" hidden></div>
     <input type="file" id="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.aac" multiple hidden>
     <div id="list"></div>
@@ -100,7 +103,7 @@
     </div>
     <div id="bd"></div>
     <div id="dock">
-        <div id="empty"><span data-i18n="empty.1">還沒有釘選任何迷因 😭</span><br><span data-i18n="empty.2">去資料庫勾選！</span></div>
+        <div id="empty" role="img" aria-label="還沒有釘選任何迷因，去資料庫勾選！" data-i18n-aria="empty.aria">😭<svg width="64" height="26" viewBox="0 0 64 26" fill="none" stroke="#000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 14q14-4 28 0M24 7l7 7-7 6"/><rect x="40" y="3" width="20" height="20" rx="4"/><path d="M45 13l4 5 7-10"/></svg></div>
         <div id="more" role="status"></div>
         <div id="ring"></div>
         <button class="btn" id="fab" aria-label="迷因快捷選單" data-i18n-aria="fab.aria"><svg width="48" height="48">
@@ -118,6 +121,7 @@
     <script defer src="js/menu.js"></script>
     <script defer src="js/keys.js"></script>
     <script defer src="js/tour.js"></script>
+    <script defer src="js/hints.js"></script>
     <script defer src="js/upload.js"></script>
     <script defer src="js/main.js"></script>
 </body>

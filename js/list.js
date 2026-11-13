@@ -34,7 +34,7 @@
             row.innerHTML = '<button class="btn play" aria-label="' + F.esc(F.t('list.play', { name: s.name })) + '">' + (s.emo || '🎵') + '</button><div class="nm">' + F.esc(s.name) + '</div>' +
                 (s.fn || s.lock ? '' : '<button class="btn ren" aria-label="' + F.esc(F.t('list.rename', { name: s.name })) + '">✏️</button>') +
                 (s.fn || s.lock ? '' : '<button class="btn del" aria-label="' + F.esc(F.t('list.delete', { name: s.name })) + '">🗑</button>') +
-                '<kbd class="key" aria-hidden="true"></kbd><label class="eq"><input type="checkbox"' + (F.eq.indexOf(s.id) > -1 ? ' checked' : '') + '><b></b>' + F.esc(F.t('list.equip')) + '</label>';
+                '<kbd class="key" aria-hidden="true"></kbd><label class="eq"><input type="checkbox"' + (F.eq.indexOf(s.id) > -1 ? ' checked' : '') + '><b></b><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#pin"/></svg><span class="sr-only">' + F.esc(F.t('list.equip')) + '</span></label>';
             var p = row.querySelector('.play');
             p.addEventListener('click', function () { F.play(s, p); });
             row.querySelector('input').addEventListener('change', function (e) {
@@ -65,7 +65,7 @@
     F.onLang(function () {
         if (!barText || !bar || bar.hidden) return;
         barText.m.textContent = F.t('undo.msg', { name: barText.name });
-        barText.u.textContent = F.t('undo.btn');
+        barText.u.textContent = '↩ ' + F.t('undo.btn');
     });
     function ensureBar() {
         if (bar) return bar;
@@ -84,8 +84,9 @@
         rec.timer = setTimeout(function () { if (pend === rec) commitPending(); }, 6000);
         pend = rec;
         var b = ensureBar(); b.innerHTML = '';
-        var m = document.createElement('span'); m.textContent = F.t('undo.msg', { name: s.name });
-        var u = document.createElement('button'); u.type = 'button'; u.className = 'btn'; u.textContent = F.t('undo.btn');
+        var m = document.createElement('span'); m.className = 'sr-only'; m.textContent = F.t('undo.msg', { name: s.name });
+        var v = document.createElement('span'); v.className = 'ub-name'; v.setAttribute('aria-hidden', 'true'); v.textContent = '🗑 ' + s.name;
+        var u = document.createElement('button'); u.type = 'button'; u.className = 'btn'; u.textContent = '↩ ' + F.t('undo.btn');
         barText = { m: m, u: u, name: s.name };
         u.addEventListener('click', function () {
             if (pend !== rec) return;
@@ -95,6 +96,6 @@
             if (rec.eqIdx > -1 && F.eq.indexOf(rec.s.id) < 0) F.eq.splice(Math.min(rec.eqIdx, F.eq.length), 0, rec.s.id);
             F.saveEq(); F.renderList(); F.renderMenu();
         });
-        b.appendChild(m); b.appendChild(u); b.hidden = false;
+        b.appendChild(m); b.appendChild(v); b.appendChild(u); b.hidden = false;
     };
 })(window.Fahhh);

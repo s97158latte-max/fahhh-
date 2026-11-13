@@ -10,8 +10,9 @@
 .open .item{opacity:1;pointer-events:auto;visibility:visible;transition:transform .55s cubic-bezier(.34,1.56,.64,1) calc(var(--i) * 45ms),opacity .2s calc(var(--i) * 45ms),visibility 0s;transform:rotate(var(--a)) translateX(var(--r)) rotate(calc(-1 * var(--a))) scale(1)}
 .item i{font-style:normal;font-size:20px}
 .item u{text-decoration:none;font-size:11px;line-height:1.1;max-width:50px;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;word-break:break-all;text-align:center;margin-top:1px}
-#empty{display:none;position:absolute;right:78px;bottom:14px;width:170px;padding:8px;font-size:13px;font-weight:bold;background:#fff;border:3px solid #000;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;text-align:center}
-.open #empty.show{display:block}
+#empty{display:none;position:absolute;right:78px;bottom:14px;width:max-content;align-items:center;gap:8px;padding:8px 14px;font-size:28px;line-height:1;font-weight:bold;background:#fff;border:3px solid #000;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;text-align:center}
+.open #empty.show{display:flex}
+#more svg{vertical-align:-3px}
 #more{display:none;position:fixed;left:50%;transform:translateX(-50%);top:calc(56px + env(safe-area-inset-top,0px));width:max-content;max-width:calc(100vw - 24px);padding:8px;font-size:13px;font-weight:bold;background:#fff;border:3px solid #000;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;text-align:center}
 .open #more.show{display:block}
 #credit{position:fixed;z-index:40;top:0;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:8px;height:calc(46px + env(safe-area-inset-top,0px));padding:0 12px;padding-top:env(safe-area-inset-top,0px);background:#fff;color:#000;border:solid #000;border-width:0 3px 3px 4px;border-radius:0 0 22px 7px/0 0 9px 15px;font-size:12px;font-weight:bold;pointer-events:none}
@@ -29,7 +30,7 @@
 /* ---------- 電腦版滑鼠懸停 ---------- */
 @media (hover:hover) and (pointer:fine){
 /* 游標:可點的才變手指,.row 本體維持預設 */
-.btn,.eq,.eq b,#fab,.row .play,.item,#lang,#up,.ren,.del,#undoBar .btn{cursor:pointer}
+.btn,.eq,.eq b,#fab,.row .play,.item,#lang,#up,#storeInfo,.ren,.del,#undoBar .btn{cursor:pointer}
 /* 微抖:只用獨立的 translate/rotate 屬性,不覆蓋 #fab/.item 的 transform 動畫;進入 :hover 播一次 */
 @keyframes hoverWiggle{0%{translate:0 0;rotate:0deg}25%{translate:1px -1px;rotate:.6deg}50%{translate:-1px 1px;rotate:-.5deg}75%{translate:1px 1px;rotate:.3deg}100%{translate:0 0;rotate:0deg}}
 /* :where() 讓選擇器權重歸零,不蓋掉 .shake #up 的震動與 #fab.nudge 的呼吸動畫 */

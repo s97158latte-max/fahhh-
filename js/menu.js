@@ -43,7 +43,12 @@
             idx += take; r++;
         }
         var more = F.$('#more'), left = n - idx;
-        more.textContent = left > 0 ? F.t('more', { n: left }) : '';
+        more.textContent = '';
+        if (left > 0) {
+            var vis = document.createElement('span'); vis.setAttribute('aria-hidden', 'true'); vis.innerHTML = '<svg width="18" height="18" focusable="false"><use href="#pin"/></svg> +' + left;
+            var sr = document.createElement('span'); sr.className = 'sr-only'; sr.textContent = F.t('more', { n: left });
+            more.appendChild(vis); more.appendChild(sr);
+        }
         more.classList.toggle('show', left > 0);
     };
 

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#fff"/>
+  <g stroke="#000" stroke-width="17" stroke-linecap="round" stroke-linejoin="round">
+    <!-- 按鈕底座 -->
+    <circle cx="256" cy="282" r="164.8" fill="#CDEEFB"/>
+    <rect x="91.2" y="225" width="329.6" height="57" fill="#CDEEFB" stroke="none"/>
+    <path d="M91.2 225V282M420.8 225V282" fill="none"/>
+    <!-- 按鈕頂面 -->
+    <circle cx="256" cy="225" r="164.8" fill="#fff"/>
+    <!-- 喇叭 -->
+    <path d="M170 203h34l44-36v116l-44-36h-34z" fill="#000"/>
+    <path d="M276 197a40 40 0 0 1 0 56M301 172a75 75 0 0 1 0 106" fill="none" stroke="#00A2E8"/>
+  </g>
+</svg>

@@ -11,7 +11,8 @@
     <title>fahhh!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Iansui&display=swap">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Iansui&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Iansui&display=swap"></noscript>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/dock.css">
     <link rel="stylesheet" href="css/characters.css">
@@ -37,7 +38,7 @@
             </svg></h1>
         <p class="sub">迷因總資料庫。勾選「裝備」，右下角的小白點就會長出那顆按鈕 (╥﹏╥)</p>
         <p class="sub">沒聲音？先檢查 iPhone 側邊的靜音鍵和音量</p>
-        <img class="wj" id="wjB" alt="" aria-hidden="true" draggable="false" src="images/wjB.png">
+        <img class="wj" id="wjB" alt="" aria-hidden="true" draggable="false" src="images/wjB.png" width="377" height="582" decoding="async">
     </div>
     <div class="note">(;´Д`) 音檔只存在這個瀏覽器；iPhone 的「主畫面 App」和 Safari 各自獨立，加入主畫面後要重新上傳。</div>
     <button class="btn" id="up">＋ 上傳新迷因</button>
@@ -45,8 +46,8 @@
     <input type="file" id="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.aac" multiple hidden>
     <div id="list"></div>
 
-    <div class="ft"><img class="wj" id="wjA" alt="" aria-hidden="true" draggable="false" src="images/wjA.png"></div>
-    <div id="credit"><span>created by</span><img alt="邊境部署 EdgeDeploy" draggable="false" src="images/edgedeploy-horizontal-blue.png">
+    <div class="ft"><img class="wj" id="wjA" alt="" aria-hidden="true" draggable="false" src="images/wjA.png" width="318" height="582" loading="lazy" decoding="async"></div>
+    <div id="credit"><span>created by</span><img alt="邊境部署 EdgeDeploy" draggable="false" src="images/edgedeploy-horizontal-blue.png" width="2400" height="597" decoding="async">
     </div>
     <div id="bd"></div>
     <div id="dock">

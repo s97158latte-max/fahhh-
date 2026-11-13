@@ -73,12 +73,12 @@
         track(osc); osc.start(t); osc.stop(t + dur + .05);
     }
 
-    function noise(c, dur, gain, lp) {
+    function noise(c, dur, gain, lp, t0) {
         var n = Math.floor(c.sampleRate * dur), b = c.createBuffer(1, n, c.sampleRate), d = b.getChannelData(0);
         for (var i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
         var s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
         s.buffer = b; f.type = 'lowpass'; f.frequency.value = lp; g.gain.value = gain;
-        s.connect(f); f.connect(g); g.connect(dest()); track(s); s.start();
+        s.connect(f); f.connect(g); g.connect(dest()); track(s); s.start(c.currentTime + (t0 || 0));
     }
 
     function loadBuf(s) {

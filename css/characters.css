@@ -3,16 +3,14 @@ html{overflow-x:hidden}
 @media (max-width:819px){body{overflow-x:clip}}
 .wj{position:absolute;z-index:0;pointer-events:none;mix-blend-mode:multiply;max-width:none;height:auto}
 .hd{position:relative}
-.hd h1,.hd .sub,#up,.row,.note{position:relative;z-index:1}
+.hd h1,#up,.row,.note{position:relative;z-index:1}
 .row,.note{background:#fff}
-.hd .sub{max-width:64%}
 #wjB{right:-16px;top:-6px;width:118px;--r:6deg;transform:rotate(var(--r));animation:wob 1.7s steps(1,end) infinite}
 .ft{position:relative;height:130px}
 #wjA{left:-14px;bottom:-150px;width:130px;--r:-4deg;transform:rotate(var(--r));animation:wob 1.1s steps(1,end) infinite}
 @keyframes wob{0%{transform:rotate(var(--r))}50%{transform:rotate(calc(var(--r) + 3deg))}}
 @media (prefers-reduced-motion:reduce){.wj{animation:none !important}}
 @media (min-width:820px){
- .hd .sub{max-width:none}
  .wj{position:fixed;display:none}
  .ft{height:0}
  #wjA{left:2vw;bottom:-5vh;top:auto;--r:-5deg}

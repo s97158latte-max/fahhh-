@@ -9,9 +9,6 @@
     var DICT = {
         zh: {
             'title': 'fahhh! 迷因音效按鈕｜Meme Soundboard｜created by 邊境部署 EdgeDeploy',
-            'sub1': '迷因總資料庫。勾選「釘選」，右下角的小白點就會長出那顆按鈕 (╥﹏╥)',
-            'sub2': '沒聲音？先檢查 iPhone 側邊的靜音鍵和音量',
-            'tip.keys': '小技巧：已釘選的迷因可以直接按鍵盤 1～0、Q～P 播放',
             'note': '(;´Д`) 音檔只存在這個瀏覽器；iPhone 的「主畫面 App」和 Safari 各自獨立，加入主畫面後要重新上傳。',
             'upload.btn': '＋ 上傳新迷因',
             'credit': 'created by',
@@ -23,6 +20,7 @@
             'empty.1': '還沒有釘選任何迷因 😭',
             'empty.2': '去資料庫勾選！',
             'hint': '點我展開你釘選的迷因',
+            'hint.silent': '🔇 沒聲音？看靜音鍵',
             'more': '還有 {n} 個沒顯示,請取消勾選一些',
             'list.play': '播放 {name}',
             'list.rename': '重新命名 {name}',
@@ -48,9 +46,6 @@
         },
         en: {
             'title': 'fahhh! meme soundboard | created by 邊境部署 EdgeDeploy',
-            'sub1': 'The meme sound library. Tick “Pin” and the little white dot at the bottom right will sprout that button (╥﹏╥)',
-            'sub2': 'No sound? Check your iPhone’s silent switch and volume first',
-            'tip.keys': 'Tip: press 1–0 or Q–P to play your pinned memes',
             'note': '(;´Д`) Your sounds only live in this browser. On iPhone, the Home Screen app and Safari don’t share them, so you’ll need to re-upload after adding to the Home Screen.',
             'upload.btn': '+ Upload a new meme',
             'credit': 'created by',
@@ -62,6 +57,7 @@
             'empty.1': 'No memes pinned yet 😭',
             'empty.2': 'Go tick some in the library!',
             'hint': 'Tap to open your pinned memes',
+            'hint.silent': '🔇 No sound? Check the silent switch',
             'more': '{n} more not shown. Untick a few to make room',
             'list.play': 'Play {name}',
             'list.rename': 'Rename {name}',

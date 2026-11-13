@@ -60,7 +60,11 @@
         } catch (err) {
             skipped.push({ name: F.t('upload.readfail') });
         }
-        if (added) F.requestPersist();
+        if (added) {
+            F.requestPersist();
+            /* 第一次成功上傳:主動展開一次資料保存提醒 */
+            try { if (!localStorage.getItem('fahhh_store_info')) { localStorage.setItem('fahhh_store_info', '1'); if (F.showStoreInfo) F.showStoreInfo(); } } catch (err) { }
+        }
         F.saveEq(); F.renderList(); F.renderMenu(); input.value = '';
         upBtn.disabled = false;
         var lines = [];

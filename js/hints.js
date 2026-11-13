@@ -20,3 +20,19 @@
         F.onLang(function () { if (el) el.textContent = F.t('hint.silent'); });
     });
 })(window.Fahhh);
+
+/* ---------- 資料保存提醒:#storeInfo 圖示鈕展開 #storePanel ---------- */
+(function (F) {
+    'use strict';
+    var btn = F.$('#storeInfo'), panel = F.$('#storePanel');
+    if (!btn || !panel) return;
+    function set(v) { panel.hidden = !v; btn.setAttribute('aria-expanded', v ? 'true' : 'false'); }
+    F.showStoreInfo = function () { set(true); };
+    btn.addEventListener('click', function () { set(panel.hidden); });
+    document.addEventListener('pointerdown', function (e) {
+        if (!panel.hidden && !panel.contains(e.target) && !btn.contains(e.target)) set(false);
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !panel.hidden) { set(false); btn.focus(); }
+    });
+})(window.Fahhh);

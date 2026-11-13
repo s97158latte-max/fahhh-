@@ -83,8 +83,11 @@
             </svg></h1>
         <img class="wj" id="wjB" alt="" aria-hidden="true" draggable="false" src="images/wjB.png" width="377" height="582" decoding="async">
     </div>
-    <div class="note" data-i18n="note">(;´Д`) 音檔只存在這個瀏覽器；iPhone 的「主畫面 App」和 Safari 各自獨立，加入主畫面後要重新上傳。</div>
-    <button class="btn" id="up" data-i18n="upload.btn">＋ 上傳新迷因</button>
+    <div class="upRow">
+        <button class="btn" id="up" data-i18n="upload.btn">＋ 上傳新迷因</button>
+        <button class="btn" id="storeInfo" type="button" aria-expanded="false" aria-controls="storePanel" aria-label="資料只存在這個瀏覽器" data-i18n-aria="store.aria"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5.5q0-1.5 1.5-1.5h14l5 5v13.5q0 1.5-1.5 1.5h-17.5q-1.5 0-1.5-1.5z"/><path d="M8 4v6h9V4M8 25v-7h11v7"/><circle cx="23" cy="22" r="6" fill="#fff"/><path d="M23 18.7v3.6M23 25v.2" stroke-width="2.6"/></svg></button>
+    </div>
+    <div id="storePanel" role="status" hidden data-i18n="note">(;´Д`) 音檔只存在這個瀏覽器；iPhone 的「主畫面 App」和 Safari 各自獨立，加入主畫面後要重新上傳。</div>
     <div id="upMsg" role="status" aria-live="polite" hidden></div>
     <input type="file" id="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.aac" multiple hidden>
     <div id="list"></div>

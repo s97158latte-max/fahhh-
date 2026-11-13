@@ -21,7 +21,8 @@ created by [邊境部署 EdgeDeploy](https://www.edgedeploy.tw/)
 - **電腦版**：多欄方塊版面、滑鼠懸停回饋，以及鍵盤快捷鍵（見下）。
 - **中文 / English**：頁面右上角切換；第一次依瀏覽器語言決定，之後記住選擇。
 - **可離線使用**：service worker 預快取所有檔案；可加入主畫面。
-- **載入畫面**、播放時的震動與音效名稱字泡、「播放中」螢光黃標示，都尊重系統的「減少動態效果」設定。
+- **新手導覽**：第一次造訪時以聚光燈和手繪箭頭帶路（每步最多 3 個字）；頂部橫幅左側的「?」可隨時重看。
+- **載入畫面**、播放時的震動與音效名稱字泡、「播放中」螢光黃標示、新手導覽，都尊重系統的「減少動態效果」設定。
 
 ### 鍵盤快捷鍵（有鍵盤的電腦）
 
@@ -63,6 +64,7 @@ css/
   dock.css            右下角小白點、輪狀選單、頂部橫幅、懸停
   characters.css      Wojak 角色圖與其定位
   boot.css            載入畫面
+  tour.css            新手導覽
 
 js/
   boot.js             載入畫面（放在 <head>，同步執行）
@@ -75,6 +77,7 @@ js/
   list.js             音效清單、改名、刪除與復原
   menu.js             輪狀快捷選單
   keys.js             鍵盤快捷鍵
+  tour.js             新手導覽
   upload.js           上傳、驗證與訊息
   main.js             啟動流程、service worker 註冊
 ```
@@ -83,7 +86,7 @@ js/
 
 ### 啟動流程
 
-`boot.js` 先顯示載入畫面；`main.js` 分三階段完成（讀出資料庫、第一次渲染、內建音檔解碼），每完成一階段在 `document` 派發 `fahhh:progress`（`detail: {done, total}`），全部完成後派發一次 `fahhh:ready`。載入畫面收到 `fahhh:ready` 才收起；沒收到時有後備的逾時機制，不會卡住。自訂音效在就緒之後才在瀏覽器閒置時逐一解碼。
+`boot.js` 先顯示載入畫面；`main.js` 分三階段完成（讀出資料庫、第一次渲染、內建音檔解碼），每完成一階段在 `document` 派發 `fahhh:progress`（`detail: {done, total}`），全部完成後派發一次 `fahhh:ready`。載入畫面收到 `fahhh:ready` 才收起；沒收到時有後備的逾時機制，不會卡住。載入畫面移除時派發 `fahhh:booted`，新手導覽等它出現後才開始。自訂音效在就緒之後才在瀏覽器閒置時逐一解碼。
 
 ### 資料存放
 
@@ -92,7 +95,7 @@ js/
 | IndexedDB `fahhh` / `sounds` | 自訂音效（名稱、二進位音檔、MIME 類型）。舊版的 base64 資料仍可讀取 |
 | localStorage `fahhh_eq` | 已釘選的音效清單 |
 | localStorage `fahhh_lang` | 語言 |
-| localStorage `fahhh_seen` | 是否看過首次提示 |
+| localStorage `fahhh_tour` | 是否看過新手導覽 |
 
 **資料只存在使用者自己的瀏覽器。** iPhone 的「主畫面 App」與 Safari 的儲存空間是分開的，加入主畫面後需要重新上傳。第一次成功上傳後，頁面會向瀏覽器申請持久保存（`navigator.storage.persist()`），降低被瀏覽器清除的機率，但不保證。
 
@@ -119,7 +122,7 @@ js/
 - Upload your own audio: up to 10 MB and 30 seconds per file, validated by decoding it first. Formats: mp3, m4a, wav, aac, flac, caf, ogg (ogg may not decode on Safari/iOS).
 - Only one sound plays at a time; a new one cuts the previous one off.
 - Desktop: multi-column tiles, hover feedback, and keyboard shortcuts (`1`–`0`, then `Q`–`P`, for your first 20 pinned sounds).
-- Chinese / English interface with a language switch; works offline and can be added to the home screen.
+- A short picture-based tour on the first visit (replayable from the "?" button); Chinese / English interface with a language switch; works offline and can be added to the home screen.
 - Your sounds are stored in your own browser only (IndexedDB). On iPhone, the Home Screen app and Safari do not share storage.
 
 Run it locally with any static server, for example `python3 -m http.server 8000`. There is no build step. See the Chinese sections above for the project structure and development notes — in particular, keep the CSP in mind (no inline scripts or styles), and bump `CACHE` in `sw.js` whenever the precache list changes.

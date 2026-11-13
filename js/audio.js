@@ -14,6 +14,46 @@
         return ctx;
     }
 
+    /* 單聲道:cur 為目前這次 play 的發聲工作階段 { bus, nodes, n },tone/noise 會接到它的 bus */
+    var FADE = .03, cur = null, curAudio = null;
+
+    function dest() { return cur ? cur.bus : master; }
+    function track(node) {
+        var sess = cur;
+        if (!sess) return;
+        sess.nodes.push(node); sess.n++;
+        node.onended = function () { if (--sess.n <= 0) release(sess); };
+    }
+    function release(sess) {
+        if (cur === sess) cur = null;
+        try { sess.bus.disconnect(); } catch (e) { }
+    }
+    function stopSession(sess) {
+        var c = ctx, t = c.currentTime;
+        try {
+            var g = sess.bus.gain;
+            g.cancelScheduledValues(t);
+            g.setValueAtTime(g.value, t);
+            g.linearRampToValueAtTime(0, t + FADE);
+        } catch (e) { }
+        sess.nodes.forEach(function (n) { try { n.stop(t + FADE + .01); } catch (e) { } });
+        /* 已淡出,稍後斷線釋放;不依賴 onended(未 start 的節點可能不觸發) */
+        setTimeout(function () { try { sess.bus.disconnect(); } catch (e) { } }, (FADE + .1) * 1000);
+    }
+    function stopAll() {
+        if (cur) { var s = cur; cur = null; stopSession(s); }
+        if (curAudio) {
+            var a = curAudio; curAudio = null;
+            try { a.pause(); a.currentTime = 0; } catch (e) { }
+        }
+    }
+    function begin(c) {
+        var bus = c.createGain();
+        bus.gain.value = 1; bus.connect(master);
+        cur = { bus: bus, nodes: [], n: 0 };
+        return cur;
+    }
+
     function tone(c, o) {
         var t = c.currentTime + (o.t0 || 0), dur = o.dur, osc = c.createOscillator(), f = c.createBiquadFilter(), g = c.createGain();
         osc.type = o.type || 'sawtooth';
@@ -23,13 +63,13 @@
         g.gain.setValueAtTime(.0001, t);
         g.gain.linearRampToValueAtTime(o.gain || .5, t + (o.att || .03));
         g.gain.exponentialRampToValueAtTime(.0001, t + dur);
-        osc.connect(f); f.connect(g); g.connect(master);
+        osc.connect(f); f.connect(g); g.connect(dest());
         if (o.vib) {
             var l = c.createOscillator(), lg = c.createGain();
             l.frequency.value = o.vibHz || 6; lg.gain.value = o.vib;
-            l.connect(lg); lg.connect(osc.frequency); l.start(t); l.stop(t + dur + .05);
+            l.connect(lg); lg.connect(osc.frequency); track(l); l.start(t); l.stop(t + dur + .05);
         }
-        osc.start(t); osc.stop(t + dur + .05);
+        track(osc); osc.start(t); osc.stop(t + dur + .05);
     }
 
     function noise(c, dur, gain, lp) {
@@ -37,7 +77,7 @@
         for (var i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
         var s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
         s.buffer = b; f.type = 'lowpass'; f.frequency.value = lp; g.gain.value = gain;
-        s.connect(f); f.connect(g); g.connect(master); s.start();
+        s.connect(f); f.connect(g); g.connect(dest()); track(s); s.start();
     }
 
     function loadBuf(s) {
@@ -53,50 +93,30 @@
         setTimeout(function () { el.classList.remove('flash'); }, 110);
     }
 
-    /* 取樣音檔的發聲追蹤:同 id 重播切掉前一聲,全域上限切掉最舊 */
-    var MAX_VOICES = 8, FADE = .03, FN_GAP = 40;
-    var voices = [], lastFn = {};
-
-    function stopVoice(v) {
-        var i = voices.indexOf(v);
-        if (i < 0) return;
-        voices.splice(i, 1);
-        try {
-            var t = ctx.currentTime;
-            v.g.gain.cancelScheduledValues(t);
-            v.g.gain.setValueAtTime(v.g.gain.value, t);
-            v.g.gain.linearRampToValueAtTime(0, t + FADE);
-            v.src.stop(t + FADE + .01);
-        } catch (e) { }
+    function playBuf(c, b) {
+        var sess = begin(c), src = c.createBufferSource();
+        src.buffer = b; src.connect(sess.bus);
+        track(src); src.start();
     }
 
-    function playBuf(c, s, b) {
-        for (var i = voices.length - 1; i >= 0; i--) if (voices[i].id === s.id) stopVoice(voices[i]);
-        while (voices.length >= MAX_VOICES) stopVoice(voices[0]);
-        var src = c.createBufferSource(), g = c.createGain(), v = { id: s.id, src: src, g: g };
-        src.buffer = b; src.connect(g); g.connect(master);
-        src.onended = function () {
-            var k = voices.indexOf(v);
-            if (k >= 0) voices.splice(k, 1);
-            try { src.disconnect(); g.disconnect(); } catch (e) { }
-        };
-        voices.push(v);
-        src.start();
-    }
-
+    /* 單聲道:任何音效觸發時,先淡出並停止目前所有聲音,再播新的 */
     function play(s, el) {
         flash(el);
         if (navigator.vibrate) try { navigator.vibrate(50); } catch (e) { }
         var c = getCtx();
+        stopAll();
         if (s.fn) {
-            var now = Date.now();
-            if (lastFn[s.id] && now - lastFn[s.id] < FN_GAP) return;
-            lastFn[s.id] = now;
-            s.fn(c); return;
+            var sess = begin(c);
+            try { s.fn(c); } catch (e) { }
+            if (sess.n === 0) release(sess);
+            return;
         }
         var b = F.buf[s.id];
-        if (b) playBuf(c, s, b);
-        else { try { new Audio(s.data).play().catch(function () { }); } catch (e) { } loadBuf(s); }
+        if (b) playBuf(c, b);
+        else {
+            try { var a = new Audio(s.data); curAudio = a; a.play().catch(function () { }); } catch (e) { }
+            loadBuf(s);
+        }
     }
 
     F.getCtx = getCtx; F.tone = tone; F.noise = noise; F.loadBuf = loadBuf; F.play = play;

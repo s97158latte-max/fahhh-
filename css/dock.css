@@ -28,3 +28,24 @@
 #lang::after{content:'';position:absolute;inset:-5px}
 
 .btn:focus-visible,#fab:focus-visible{outline:3px solid #FF0000;outline-offset:3px}
+
+/* ---------- 電腦版滑鼠懸停 ---------- */
+@media (hover:hover) and (pointer:fine){
+/* 游標:可點的才變手指,.row 本體維持預設 */
+.btn,.eq,.eq b,#fab,.row .play,.item,#lang,#up,.ren,.del,#undoBar .btn{cursor:pointer}
+/* 微抖:只用獨立的 translate/rotate 屬性,不覆蓋 #fab/.item 的 transform 動畫;進入 :hover 播一次 */
+@keyframes hoverWiggle{0%{translate:0 0;rotate:0deg}25%{translate:1px -1px;rotate:.6deg}50%{translate:-1px 1px;rotate:-.5deg}75%{translate:1px 1px;rotate:.3deg}100%{translate:0 0;rotate:0deg}}
+/* :where() 讓選擇器權重歸零,不蓋掉 .shake #up 的震動與 #fab.nudge 的呼吸動畫 */
+:where(.btn):hover,:where(.eq):hover b{animation:hoverWiggle .14s steps(4,end) 1}
+/* 鍵帽/貼紙感:陰影 + 按下去時陰影消失(位移沿用 base.css 的 :active) */
+.btn:not(.item):not(#fab):hover,.eq:hover b{box-shadow:2px 2px 0 #000}
+.btn:not(.item):not(#fab):active{box-shadow:none;animation:none}
+/* #fab、.item 有自己的 transform 轉場,改用 filter 做懸停回饋 */
+#fab:hover,.item:hover{filter:drop-shadow(2px 2px 0 #000)}
+#fab:active,.item:active{filter:none}
+/* 列整體抬起,不改背景色,播放中維持黃底 */
+.row:hover{box-shadow:3px 3px 0 #000}
+}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:reduce){
+.btn:hover,.eq:hover b{animation:none}
+}

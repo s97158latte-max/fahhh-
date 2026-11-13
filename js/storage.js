@@ -27,5 +27,17 @@
         });
     };
     F.dbPut = function (o) { try { F.db && F.db.transaction('sounds', 'readwrite').objectStore('sounds').put(o); } catch (e) { } };
+    F.persisted = false;
+    F.requestPersist = function () {
+        if (F.persistAsked) return; F.persistAsked = true;
+        try {
+            var st = navigator.storage;
+            if (!st || !st.persist) return;
+            var done = function (v) { F.persisted = !!v; };
+            var ask = function () { return st.persist().then(done); };
+            var p = st.persisted ? st.persisted().then(function (v) { return v ? done(v) : ask(); }) : ask();
+            p.catch(function () { });
+        } catch (e) { }
+    };
     F.dbDel = function (id) { try { F.db && F.db.transaction('sounds', 'readwrite').objectStore('sounds').delete(id); } catch (e) { } };
 })(window.Fahhh);

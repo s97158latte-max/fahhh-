@@ -41,6 +41,7 @@
         } catch (err) {
             skipped.push({ name: '讀取失敗的檔案' });
         }
+        if (added) F.requestPersist();
         F.saveEq(); F.renderList(); F.renderMenu(); input.value = '';
         upBtn.disabled = false;
         var lines = [];

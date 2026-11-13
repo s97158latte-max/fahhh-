@@ -53,13 +53,49 @@
         setTimeout(function () { el.classList.remove('flash'); }, 110);
     }
 
+    /* 取樣音檔的發聲追蹤:同 id 重播切掉前一聲,全域上限切掉最舊 */
+    var MAX_VOICES = 8, FADE = .03, FN_GAP = 40;
+    var voices = [], lastFn = {};
+
+    function stopVoice(v) {
+        var i = voices.indexOf(v);
+        if (i < 0) return;
+        voices.splice(i, 1);
+        try {
+            var t = ctx.currentTime;
+            v.g.gain.cancelScheduledValues(t);
+            v.g.gain.setValueAtTime(v.g.gain.value, t);
+            v.g.gain.linearRampToValueAtTime(0, t + FADE);
+            v.src.stop(t + FADE + .01);
+        } catch (e) { }
+    }
+
+    function playBuf(c, s, b) {
+        for (var i = voices.length - 1; i >= 0; i--) if (voices[i].id === s.id) stopVoice(voices[i]);
+        while (voices.length >= MAX_VOICES) stopVoice(voices[0]);
+        var src = c.createBufferSource(), g = c.createGain(), v = { id: s.id, src: src, g: g };
+        src.buffer = b; src.connect(g); g.connect(master);
+        src.onended = function () {
+            var k = voices.indexOf(v);
+            if (k >= 0) voices.splice(k, 1);
+            try { src.disconnect(); g.disconnect(); } catch (e) { }
+        };
+        voices.push(v);
+        src.start();
+    }
+
     function play(s, el) {
         flash(el);
         if (navigator.vibrate) try { navigator.vibrate(50); } catch (e) { }
         var c = getCtx();
-        if (s.fn) { s.fn(c); return; }
+        if (s.fn) {
+            var now = Date.now();
+            if (lastFn[s.id] && now - lastFn[s.id] < FN_GAP) return;
+            lastFn[s.id] = now;
+            s.fn(c); return;
+        }
         var b = F.buf[s.id];
-        if (b) { var src = c.createBufferSource(); src.buffer = b; src.connect(master); src.start(); }
+        if (b) playBuf(c, s, b);
         else { try { new Audio(s.data).play().catch(function () { }); } catch (e) { } loadBuf(s); }
     }
 

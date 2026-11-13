@@ -8,6 +8,11 @@ html{overflow-x:hidden}
 #wjB{right:-16px;top:-6px;width:118px;--r:6deg;transform:rotate(var(--r));animation:wob 1.7s steps(1,end) infinite}
 .ft{position:relative;height:130px}
 #wjA{left:-14px;bottom:-150px;width:130px;--r:-4deg;transform:rotate(var(--r));animation:wob 1.1s steps(1,end) infinite}
+@media (max-width:819px){
+ /* 手機:縮小放在標題右側空白處,下緣不超過上傳列上緣 */
+ .hd h1{margin-bottom:24px}
+ #wjB{right:-4px;top:-20px;width:58px}
+}
 @keyframes wob{0%{transform:rotate(var(--r))}50%{transform:rotate(calc(var(--r) + 3deg))}}
 @media (prefers-reduced-motion:reduce){.wj{animation:none !important}}
 @media (min-width:820px){

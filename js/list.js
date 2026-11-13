@@ -34,14 +34,14 @@
             row.innerHTML = '<button class="btn play" aria-label="' + F.esc(F.t('list.play', { name: s.name })) + '">' + (s.emo || '🎵') + '</button><div class="nm">' + F.esc(s.name) + '</div>' +
                 (s.fn || s.lock ? '' : '<button class="btn ren" aria-label="' + F.esc(F.t('list.rename', { name: s.name })) + '">✏️</button>') +
                 (s.fn || s.lock ? '' : '<button class="btn del" aria-label="' + F.esc(F.t('list.delete', { name: s.name })) + '">🗑</button>') +
-                '<label class="eq"><input type="checkbox"' + (F.eq.indexOf(s.id) > -1 ? ' checked' : '') + '><b></b>' + F.esc(F.t('list.equip')) + '</label>';
+                '<kbd class="key" aria-hidden="true"></kbd><label class="eq"><input type="checkbox"' + (F.eq.indexOf(s.id) > -1 ? ' checked' : '') + '><b></b>' + F.esc(F.t('list.equip')) + '</label>';
             var p = row.querySelector('.play');
             p.addEventListener('click', function () { F.play(s, p); });
             row.querySelector('input').addEventListener('change', function (e) {
                 var i = F.eq.indexOf(s.id);
                 if (e.target.checked && i < 0) F.eq.push(s.id);
                 if (!e.target.checked && i > -1) F.eq.splice(i, 1);
-                F.saveEq(); F.renderMenu();
+                F.saveEq(); F.renderMenu(); F.renderKeys();
             });
             var rn = row.querySelector('.ren');
             if (rn) rn.addEventListener('click', function () { F.renameSound(s, row); });
@@ -51,6 +51,7 @@
             });
             L.appendChild(row);
         });
+        F.renderKeys();
     };
     /* ---------- 刪除可復原 ---------- */
     var pend = null, bar = null, barText = null;

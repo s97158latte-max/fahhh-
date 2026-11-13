@@ -1,10 +1,10 @@
 /* 迷因人物 */
 html{overflow-x:hidden}
 @media (max-width:819px){body{overflow-x:clip}}
-.wj{position:absolute;z-index:0;pointer-events:none;mix-blend-mode:multiply;max-width:none;height:auto}
+.wj{position:absolute;z-index:0;pointer-events:none;mix-blend-mode:var(--wj-blend);filter:var(--wj-filter);max-width:none;height:auto}
 .hd{position:relative}
 .hd h1,.upRow,.row{position:relative;z-index:1}
-.row{background:#fff}
+.row{background:var(--bg)}
 #wjB{right:-16px;top:-6px;width:118px;--r:6deg;transform:rotate(var(--r));animation:wob 1.7s steps(1,end) infinite}
 .ft{position:relative;height:30px}
 #wjA{left:-14px;bottom:-150px;width:130px;--r:-4deg;transform:rotate(var(--r));animation:wob 1.1s steps(1,end) infinite}

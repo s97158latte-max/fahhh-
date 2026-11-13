@@ -109,6 +109,7 @@ js/
 - **不要加行內 `<script>` 或行內 `style`**：`index.html` 的 CSP 是 `script-src 'self'`、`style-src 'self'` 加 Google Fonts。需要動態設定位置或尺寸時，用 JavaScript 的 CSSOM（`el.style.left = ...`），不要用 `setAttribute('style', ...)`。圖片來源只允許自己的網域（`img-src 'self'`），所以 CSS 不能使用 `data:` 圖。
 - **新增或更名檔案時，要同步更新 `sw.js` 的預快取清單，並把 `CACHE` 版本號加一**；只是修改既有檔案內容不需要，service worker 採「先用快取、背景更新」，使用者下次開啟就會拿到新版。
 - **啟動圖由腳本產生，更換圖示時要重生**：改了 `icons/icon-512.png` 或邊境部署標誌後，執行 `python3 tools/make_splash.py`。這些圖只有 iOS 加入主畫面時會讀，所以不放進 `sw.js` 預快取，新增或重生它們不需要改 `CACHE`。
+- **字級用 `rem`，新增文字樣式請勿用 `px`**：這樣文字才會跟著使用者的文字大小設定縮放；預設根字級 16px 時 1rem = 16px。邊框、圖示與圖片尺寸等非文字的數值仍可用 px。
 - 中英文字典的**鍵集合必須一致**（`js/i18n.js` 的 zh 與 en）。找不到英文時會退回中文，並在主控台警告。
 - 分享圖更換內容時，請換檔名或在 `og:image` 網址後加參數，否則 LINE、Facebook 會繼續用舊的快取。
 - 開發時若發現沒有更新，是 service worker 快取造成的：在開發者工具的 Application 面板解除註冊並清除網站資料。

@@ -1,5 +1,6 @@
 /* 迷因人物 */
 html{overflow-x:hidden}
+@media (max-width:819px){body{overflow-x:clip}}
 .wj{position:absolute;z-index:0;pointer-events:none;mix-blend-mode:multiply;max-width:none;height:auto}
 .hd{position:relative}
 .hd h1,.hd .sub,#up,.row,.note{position:relative;z-index:1}

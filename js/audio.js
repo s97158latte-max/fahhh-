@@ -82,10 +82,11 @@
     }
 
     function loadBuf(s) {
-        if ((!s.data && !s.buf) || F.buf[s.id]) return;
+        if ((!s.data && !s.buf) || F.buf[s.id]) return Promise.resolve();
         var c = getCtx();
         /* 新紀錄存 ArrayBuffer:解碼用複本(decodeAudioData 會 detach 原 buffer);舊紀錄為 data URL */
-        (s.buf ? Promise.resolve(s.buf.slice(0)) : fetch(s.data).then(function (r) { return r.arrayBuffer(); }))
+        /* 回傳 Promise(解碼成功或失敗皆 resolve),供啟動流程與閒置排程得知完成時機 */
+        return (s.buf ? Promise.resolve(s.buf.slice(0)) : fetch(s.data).then(function (r) { return r.arrayBuffer(); }))
             .then(function (ab) { return new Promise(function (ok, no) { var p = c.decodeAudioData(ab, ok, no); if (p && p.then) p.then(ok, no); }); })
             .then(function (b) { F.buf[s.id] = b; }).catch(function () { F.buf[s.id] = null; });
     }

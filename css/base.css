@@ -1,4 +1,4 @@
-:root{--hit:#FFE600;--bg:#fff;--fg:#000;--line:#000;--panel:#fff;--shadow:#000;--scrim:rgba(0,0,0,.55);--veil:rgba(255,255,255,.85);--dim:rgba(0,0,0,.72);--spot:#fff;--ttl-fill:#fff;--ttl-stroke:#000;--ttl-filter:none;--tour-o:#fff;--tour-i:#000;--wj-filter:none;--wj-blend:multiply;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--hit:#FFE600;--bg:#fff;--fg:#000;--line:#000;--panel:#fff;--shadow:#000;--scrim:rgba(0,0,0,.55);--veil:rgba(255,255,255,.85);--dim:rgba(0,0,0,.72);--spot:#fff;--ttl-fill:#fff;--ttl-stroke:#000;--ttl-filter:none;--tour-o:#fff;--tour-i:#000;--wj-filter:none;--wj-blend:multiply;color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 html,body{margin:0;background:var(--bg);color:var(--fg);font-family:'Comic Sans MS','Comic Sans','Iansui','Comic Neue','PingFang TC','Noto Sans TC','Microsoft JhengHei',cursive,sans-serif}
 body{max-width:560px;margin:0 auto;padding:62px 16px 150px}
@@ -106,3 +106,7 @@ svg [stroke="#000"],svg[stroke="#000"]{stroke:var(--line)}
 svg [fill="#000"]{fill:var(--fg)}
 svg [fill="#fff"]{fill:var(--bg)}
 .t-ic svg [fill="#000"]{fill:var(--tour-i)}
+/* ---------- 深色模式:跟隨系統外觀,黑白反相版 ---------- */
+@media (prefers-color-scheme:dark){
+:root{--bg:#000;--fg:#fff;--line:#fff;--panel:#0d0d0d;--shadow:#fff;--scrim:rgba(0,0,0,.72);--veil:rgba(0,0,0,.85);--dim:rgba(0,0,0,.78);--ttl-filter:drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff);--wj-filter:invert(1);--wj-blend:screen}
+}

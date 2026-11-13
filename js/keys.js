@@ -53,7 +53,8 @@
         if (e.ctrlKey || e.metaKey || e.altKey || e.repeat || e.isComposing) return;
         var n = CODES[e.code];
         if (n === undefined) return;
-        if (document.documentElement.classList.contains('booting')) return;
+        var cl = document.documentElement.classList;
+        if (cl.contains('booting') || cl.contains('touring')) return;
         if (typing(e.target) || typing(document.activeElement)) return;
         var s = pinned()[n];
         if (!s) return;

@@ -58,28 +58,9 @@
     window.addEventListener('orientationchange', onResize);
 
     var fab = F.$('#fab');
-    function setOpen(v) { dock.classList.toggle('open', v); F.$('#bd').style.display = v ? 'block' : 'none'; fab.setAttribute('aria-expanded', v ? 'true' : 'false'); if (v) dismissHint(); }
+    function setOpen(v) { dock.classList.toggle('open', v); F.$('#bd').style.display = v ? 'block' : 'none'; fab.setAttribute('aria-expanded', v ? 'true' : 'false'); }
     fab.setAttribute('aria-expanded', 'false');
 
-    // 首次造訪提示：讀寫失敗一律當作已看過
-    var hint = null;
-    function dismissHint() {
-        if (!hint) return;
-        hint.remove(); hint = null; fab.classList.remove('nudge');
-        try { localStorage.setItem('fahhh_seen', '1'); } catch (err) { }
-    }
-    (function () {
-        var seen = true;
-        try { seen = !!localStorage.getItem('fahhh_seen'); } catch (err) { }
-        if (seen) return;
-        hint = document.createElement('div');
-        hint.id = 'hint'; hint.setAttribute('role', 'note'); hint.textContent = F.t('hint');
-        hint.addEventListener('pointerdown', function (e) { e.preventDefault(); dismissHint(); });
-        dock.appendChild(hint);
-        F.onLang(function () { if (hint) hint.textContent = F.t('hint'); });
-        fab.classList.add('nudge');
-        fab.addEventListener('animationend', function () { fab.classList.remove('nudge'); });
-    })();
     fab.addEventListener('click', function (e) {
         if (e.detail === 0) { F.getCtx(); setOpen(!dock.classList.contains('open')); }
     });

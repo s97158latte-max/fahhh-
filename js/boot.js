@@ -86,6 +86,7 @@
         if (el && el.parentNode) el.parentNode.removeChild(el);
         root.classList.remove('booting');
         root.removeAttribute('aria-busy');
+        d.dispatchEvent(new Event('fahhh:booted'));
     }
 
     function finish() {

@@ -113,3 +113,6 @@ svg [fill="#fff"]{fill:var(--bg)}
 }
 .legal{max-width:34rem;margin:18px auto 0;padding:0 16px;font-size:.78rem;line-height:1.5;text-align:center;opacity:.65}
 .legal a{color:inherit;text-decoration:underline}
+.row{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.row .nm{user-select:none;-webkit-user-select:none}
+.eq{color:var(--fg)}

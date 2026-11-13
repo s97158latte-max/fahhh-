@@ -40,3 +40,4 @@ h1{display:flex;align-items:center;gap:10px;margin:6px 0 4px;font-size:46px;lett
 .row:has(.ren) .nm{flex:1 1 calc(100% - 70px)}
 }
 @media (max-width:380px){.row:has(.ren) .nm{flex-basis:calc(100% - 68px)}}
+.sprite{position:absolute}

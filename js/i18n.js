@@ -53,7 +53,8 @@
             'upload.cut': '名稱已縮短：{names}',
             'upload.nopersist': '無法保存音檔，重新整理會消失',
             'upload.drop': '放開上傳',
-            'upload.readfail': '讀取失敗的檔案'
+            'upload.readfail': '讀取失敗的檔案',
+            'desc': 'fahhh! 免費線上迷因音效板：一鍵播放 FAHHH、Bruh、Boom 等迷因音效，免安裝，還能上傳自己的音檔。Free meme soundboard.'
         },
         en: {
             'h1.sub': 'Meme Soundboard',
@@ -101,7 +102,8 @@
             'upload.cut': 'Name shortened: {names}',
             'upload.nopersist': 'Can’t save sounds; gone after refresh',
             'upload.drop': 'Drop to upload',
-            'upload.readfail': 'A file that failed to load'
+            'upload.readfail': 'A file that failed to load',
+            'desc': 'fahhh! is a free online meme soundboard: play FAHHH, Bruh, Boom and more meme sounds with one tap, no install, and upload your own audio.'
         }
     };
     F.DICT = DICT;
@@ -138,6 +140,8 @@
         var root = document.documentElement;
         root.setAttribute('lang', HTML_LANG[F.lang]);
         document.title = F.t('title');
+        var md = document.querySelector('meta[name="description"]');
+        if (md) md.setAttribute('content', F.t('desc'));
         [['data-i18n', null], ['data-i18n-aria', 'aria-label'], ['data-i18n-title', 'title'], ['data-i18n-alt', 'alt']].forEach(function (m) {
             var els = document.querySelectorAll('[' + m[0] + ']');
             for (var i = 0; i < els.length; i++) {

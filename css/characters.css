@@ -6,7 +6,7 @@ html{overflow-x:hidden}
 .hd h1,.upRow,.row{position:relative;z-index:1}
 .row{background:#fff}
 #wjB{right:-16px;top:-6px;width:118px;--r:6deg;transform:rotate(var(--r));animation:wob 1.7s steps(1,end) infinite}
-.ft{position:relative;height:130px}
+.ft{position:relative;height:30px}
 #wjA{left:-14px;bottom:-150px;width:130px;--r:-4deg;transform:rotate(var(--r));animation:wob 1.1s steps(1,end) infinite}
 @media (max-width:819px){
  /* 手機:縮小放在標題右側空白處,下緣不超過上傳列上緣 */

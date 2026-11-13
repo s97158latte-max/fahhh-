@@ -8,6 +8,7 @@
     // 「.one」是 n === 1 時的單數形（中文與基底相同）。內建音效名稱與使用者自訂名稱不在此翻譯。
     var DICT = {
         zh: {
+            'intro': 'fahhh! 是免費的線上迷因音效板：一鍵播放 FAHHH!、Bruh、Boom、Wah Wah，也能上傳自己的音檔，手機與電腦都能用。',
             'title': 'fahhh! 迷因音效按鈕｜Meme Soundboard｜created by 邊境部署 EdgeDeploy',
             'note': '(;´Д`) 音檔只存在這個瀏覽器；iPhone 的「主畫面 App」和 Safari 各自獨立，加入主畫面後要重新上傳。',
             'upload.btn': '＋ 上傳',
@@ -53,6 +54,7 @@
             'upload.readfail': '讀取失敗的檔案'
         },
         en: {
+            'intro': 'fahhh! is a free online meme soundboard: play FAHHH!, Bruh, Boom and Wah Wah with one tap, or upload your own sounds. Works on phone and desktop.',
             'title': 'fahhh! meme soundboard | created by 邊境部署 EdgeDeploy',
             'note': '(;´Д`) Your sounds only live in this browser. On iPhone, the Home Screen app and Safari don’t share them, so you’ll need to re-upload after adding to the Home Screen.',
             'upload.btn': '+ Upload',

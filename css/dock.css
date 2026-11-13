@@ -21,5 +21,8 @@
 .open #more.show{display:block}
 #credit{position:fixed;z-index:40;top:0;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:8px;height:calc(46px + env(safe-area-inset-top,0px));padding:0 12px;padding-top:env(safe-area-inset-top,0px);background:#fff;color:#000;border-bottom:3px solid #000;font-size:12px;font-weight:bold;pointer-events:none}
 #credit img{height:28px;width:auto;display:block}
+/* 語言切換鈕：靠右、不影響置中的 logo；橫幅本身 pointer-events:none，按鈕自己開回來；::after 把點擊區撐到 ≥44px */
+#lang{position:absolute;top:calc(4px + env(safe-area-inset-top,0px));right:calc(10px + env(safe-area-inset-right,0px));min-width:38px;height:35px;padding:0 8px;font-size:14px;line-height:1;pointer-events:auto}
+#lang::after{content:'';position:absolute;inset:-5px}
 
 .btn:focus-visible,#fab:focus-visible{outline:3px solid #FF0000;outline-offset:3px}

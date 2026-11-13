@@ -1,5 +1,5 @@
 /* 重看導覽鈕:橫幅左側,與右側 #lang 對稱(橫幅 pointer-events:none,按鈕自己開回來;::after 撐大點擊區) */
-#tourBtn{position:absolute;top:calc(4px + env(safe-area-inset-top,0px));left:calc(8px + env(safe-area-inset-left,0px));min-width:38px;height:35px;padding:0;font-size:20px;line-height:1;pointer-events:auto}
+#tourBtn{position:absolute;top:calc(4px + env(safe-area-inset-top,0px));left:calc(8px + env(safe-area-inset-left,0px));min-width:38px;height:35px;padding:0;font-size:1.25rem;line-height:1;pointer-events:auto}
 #tourBtn::after{content:'';position:absolute;inset:-5px}
 @media (hover:hover) and (pointer:fine){#tourBtn{cursor:pointer}}
 
@@ -15,7 +15,7 @@
 .t-arrow path,.t-ic path{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .t-arrow .o{stroke:#fff;stroke-width:15}
 .t-arrow .i{stroke:#000;stroke-width:8}
-.t-word{position:absolute;display:flex;align-items:center;gap:8px;width:max-content;max-width:min(300px,calc(100vw - 32px));pointer-events:none;transform:translate(-50%,0);font-family:Impact,'Anton','Arial Narrow Bold','Haettenschweiler',sans-serif;font-weight:400;font-size:28px;line-height:1.2;letter-spacing:1px;text-align:center;text-transform:uppercase;color:#fff;-webkit-text-stroke:5px #000;paint-order:stroke fill}
+.t-word{position:absolute;display:flex;align-items:center;gap:8px;width:max-content;max-width:min(300px,calc(100vw - 32px));pointer-events:none;transform:translate(-50%,0);font-family:Impact,'Anton','Arial Narrow Bold','Haettenschweiler',sans-serif;font-weight:400;font-size:1.75rem;line-height:1.2;letter-spacing:1px;text-align:center;text-transform:uppercase;color:#fff;-webkit-text-stroke:5px #000;paint-order:stroke fill}
 #tour.above .t-word{transform:translate(-50%,-100%)}
 @supports not (paint-order:stroke fill){.t-word{-webkit-text-stroke:0;text-shadow:-3px 0 #000,3px 0 #000,0 -3px #000,0 3px #000,-2px -2px #000,2px -2px #000,-2px 2px #000,2px 2px #000}}
 .t-tx{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;min-width:0;overflow-wrap:anywhere}

@@ -57,7 +57,7 @@ manifest.json         PWA 設定
 sw.js                 service worker（離線快取）
 robots.txt, sitemap.xml
 audio/fahhh.m4a       內建的 FAHHH! 音檔
-images/               角色圖、分享圖、邊境部署標誌
+images/               角色圖、分享圖、邊境部署標誌（淺色藍、深色白）
 images/splash/        iOS 加入主畫面的啟動圖（由 tools/make_splash.py 產生，不進 sw.js 預快取）
 tools/make_splash.py  啟動圖產生腳本（需 Pillow；開發用，不會被網站載入）
 icons/                App 圖示與 favicon

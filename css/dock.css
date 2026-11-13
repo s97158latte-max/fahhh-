@@ -26,8 +26,8 @@
 #credit::after{content:'';position:absolute;left:14px;right:30px;bottom:-7px;height:5px;border-bottom:2px solid var(--line);border-radius:0 0 60% 30%/0 0 100% 100%;transform:rotate(-.4deg);pointer-events:none}
 #credit .credit-link>span{white-space:nowrap}
 #credit img{height:28px;width:auto;display:block;flex:none}
-/* 深色:藍色標誌放在白底圓角底板上(標誌只有藍/白兩色,黑底上對比不足) */
-@media (prefers-color-scheme:dark){#credit img{box-sizing:content-box;padding:3px 8px;background:#fff;border-radius:255px 15px 225px 15px/15px 225px 15px 255px}}
+#credit picture{display:contents}
+#credit source{display:none}
 #credit .credit-link{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;align-self:stretch;gap:0 8px;padding:0 10px;color:inherit;text-decoration:none;pointer-events:auto;cursor:pointer}
 #credit .credit-link:focus-visible{outline:3px solid #FF0000;outline-offset:-3px}
 /* 語言切換鈕：靠右、不影響置中的 logo；橫幅本身 pointer-events:none，按鈕自己開回來；::after 把點擊區撐到 ≥44px */

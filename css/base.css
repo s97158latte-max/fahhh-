@@ -22,3 +22,4 @@ h1{display:flex;align-items:center;gap:10px;margin:6px 0 4px;font-size:46px;lett
 #upMsg[hidden]{display:none}
 #upMsg.out{opacity:0}
 @media (prefers-reduced-motion:reduce){#upMsg{transition:none}}
+.eq input:focus-visible+b{outline:3px solid #FF0000;outline-offset:3px}

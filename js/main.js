@@ -23,8 +23,9 @@
     /* 自訂音效:一次只解碼一個,完成後再排下一個;已被 play()/上傳插隊解碼過的(F.buf 有值或為 null)自動略過 */
     function decodeNext() {
         var next = null;
-        for (var i = 0; i < F.custom.length; i++) {
-            if (F.buf[F.custom[i].id] === undefined) { next = F.custom[i]; break; }
+        var all = F.all();
+        for (var i = 0; i < all.length; i++) {
+            if (F.buf[all[i].id] === undefined && (all[i].data || all[i].buf)) { next = all[i]; break; }
         }
         if (!next) return;
         var p;
@@ -44,6 +45,7 @@
         t = setTimeout(ok, BUILTIN_TIMEOUT);
         var ps = [];
         F.BUILTIN.forEach(function (s) {
+            if (s.lazy) return;
             try { var p = F.loadBuf(s); if (p && p.then) ps.push(p); } catch (e) { }
         });
         Promise.all(ps).then(ok, ok);

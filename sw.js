@@ -21,7 +21,7 @@ var CORE_ASSETS = [
 // 盡力而為：失敗不影響 install，之後被請求時會由 fetch 流程補進快取。
 var OPTIONAL_ASSETS = [
     'manifest.json',
-    'audio/fahhh.m4a',
+    'audio/memes/fahhh.m4a',
     'images/edgedeploy-horizontal-blue.png', 'images/edgedeploy-horizontal-white.png', 'images/wjA.png', 'images/wjB.png',
     'icons/logo.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-192.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png', 'icons/favicon.png', 'icons/favicon.ico'
 ];

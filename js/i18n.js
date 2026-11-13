@@ -49,6 +49,7 @@
             'upload.bad.one': '{n} 個無法播放：{names}',
             'upload.cut': '名稱已縮短：{names}',
             'upload.nopersist': '無法保存音檔，重新整理會消失',
+            'upload.drop': '放開上傳',
             'upload.readfail': '讀取失敗的檔案'
         },
         en: {
@@ -93,6 +94,7 @@
             'upload.bad.one': '{n} can’t play: {names}',
             'upload.cut': 'Name shortened: {names}',
             'upload.nopersist': 'Can’t save sounds; gone after refresh',
+            'upload.drop': 'Drop to upload',
             'upload.readfail': 'A file that failed to load'
         }
     };

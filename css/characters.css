@@ -7,7 +7,7 @@ html{overflow-x:hidden}
 .row{background:var(--bg)}
 #wjB{right:-16px;top:-6px;width:118px;--r:6deg;transform:rotate(var(--r));animation:wob 1.7s steps(1,end) infinite}
 .ft{position:relative;height:30px}
-#wjA{left:-14px;bottom:-150px;width:130px;--r:-4deg;transform:rotate(var(--r));animation:wob 1.1s steps(1,end) infinite}
+#wjA{left:-14px;bottom:-150px;width:130px;transform-origin:50% 32.95%;--r:-4deg;transform:rotate(var(--r));animation:wob 1.1s steps(1,end) infinite}
 @media (max-width:819px){
  /* 手機:人物依螢幕寬度縮放,貼在標題右側、橫幅下緣之下;
     只留頭與上半身(裁掉下半身線條並淡出),.hd 依人物高度撐出空間,不與上傳列重疊 */

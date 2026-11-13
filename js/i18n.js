@@ -8,7 +8,7 @@
     // 「.one」是 n === 1 時的單數形（中文與基底相同）。內建音效名稱與使用者自訂名稱不在此翻譯。
     var DICT = {
         zh: {
-            'title': 'fahhh! 迷因音效按鈕｜Meme Soundboard｜created by 邊境部署 EdgeDeploy',
+            'title': '迷因音效按鈕｜fahhh! 免費迷因音效板 Meme Soundboard',
             'note': '(;´Д`) 音檔只存在這個瀏覽器；iPhone 的「主畫面 App」和 Safari 各自獨立，加入主畫面後要重新上傳。',
             'upload.btn': '＋ 上傳',
             'credit': 'created by',
@@ -53,7 +53,7 @@
             'upload.readfail': '讀取失敗的檔案'
         },
         en: {
-            'title': 'fahhh! 迷因音效按鈕｜Meme Soundboard｜created by 邊境部署 EdgeDeploy',
+            'title': 'Meme Soundboard | fahhh! Free Online Meme Sound Buttons',
             'note': '(;´Д`) Your sounds only live in this browser. On iPhone, the Home Screen app and Safari don’t share them, so you’ll need to re-upload after adding to the Home Screen.',
             'upload.btn': '+ Upload',
             'credit': 'created by',

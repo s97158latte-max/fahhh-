@@ -36,7 +36,27 @@
                 (s.fn || s.lock ? '' : '<button class="btn del" aria-label="' + F.esc(F.t('list.delete', { name: s.name })) + '">🗑</button>') +
                 '<kbd class="key" aria-hidden="true"></kbd><label class="eq"><input type="checkbox"' + (F.eq.indexOf(s.id) > -1 ? ' checked' : '') + '><b></b><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#pin"/></svg><span class="sr-only">' + F.esc(F.t('list.equip')) + '</span></label>';
             var p = row.querySelector('.play');
-            p.addEventListener('click', function () { F.play(s, p); });
+            /* 按下即回應:mouse/pen 在 pointerdown 播放;touch 在 pointerup 播放(位移 <10px),
+               以免手指開始捲動清單時誤播(聲音一播無法收回)。之後的 click 由 ptr 旗標略過,
+               沒有指標事件的 click(鍵盤 Enter/Space、輔助科技)仍照常播放。 */
+            var ptr = false, t0 = null, ptrTimer = 0;
+            function armPtr() { ptr = true; clearTimeout(ptrTimer); ptrTimer = setTimeout(function () { ptr = false; }, 1000); }
+            p.addEventListener('pointerdown', function (e) {
+                armPtr();
+                if (e.pointerType === 'touch') { t0 = { x: e.clientX, y: e.clientY }; return; }
+                if (e.button !== 0) return;
+                F.play(s, p);
+            });
+            p.addEventListener('pointerup', function (e) {
+                if (e.pointerType !== 'touch' || !t0) return;
+                var dx = e.clientX - t0.x, dy = e.clientY - t0.y; t0 = null;
+                if (dx * dx + dy * dy < 100) F.play(s, p);
+            });
+            p.addEventListener('pointercancel', function () { t0 = null; ptr = false; });
+            p.addEventListener('click', function () {
+                if (ptr) { ptr = false; clearTimeout(ptrTimer); return; }
+                F.play(s, p);
+            });
             row.querySelector('input').addEventListener('change', function (e) {
                 var i = F.eq.indexOf(s.id);
                 if (e.target.checked && i < 0) F.eq.push(s.id);

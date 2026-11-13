@@ -3,12 +3,24 @@
     'use strict';
     var dock = F.$('#dock'), ring = F.$('#ring');
 
+    // 量測 safe-area(以隱藏元素的 padding 取得 env() 對應 px;不支援時為 0)
+    var probe = document.createElement('div');
+    probe.setAttribute('aria-hidden', 'true');
+    probe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;' +
+        'padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';
+    document.body.appendChild(probe);
+    function safeInsets() {
+        var cs = getComputedStyle(probe);
+        return { t: parseFloat(cs.paddingTop) || 0, r: parseFloat(cs.paddingRight) || 0, b: parseFloat(cs.paddingBottom) || 0 };
+    }
+
     F.renderMenu = function () {
         ring.innerHTML = '';
         var list = F.all().filter(function (s) { return F.eq.indexOf(s.id) > -1; });
         F.$('#empty').classList.toggle('show', list.length === 0);
         // 依半徑算每圈容量:弧長(90°) / 間距;半徑逐圈 +75,最外圈不超出螢幕左/上緣
-        var maxR = Math.min(window.innerWidth - 87, window.innerHeight - 52 - 27 - 56), idx = 0, r = 0, n = list.length, k = 0;
+        var si = safeInsets();
+        var maxR = Math.min(window.innerWidth - 87 - si.r, window.innerHeight - 52 - 27 - 56 - si.t - si.b), idx = 0, r = 0, n = list.length, k = 0;
         while (idx < n) {
             var rr = 120 + 75 * r;
             if (rr > maxR) break;
@@ -34,6 +46,16 @@
         more.textContent = left > 0 ? '還有 ' + left + ' 個沒顯示,請取消勾選一些' : '';
         more.classList.toggle('show', left > 0);
     };
+
+    // 旋轉/縮放後重算:rAF 合併 + 150ms debounce。展開中只重建項目,不動 .open,
+    // 新項目直接套用 .open 樣式(無舊狀態可轉場),因此不會閃爍或重播動畫。
+    var resizeTimer = 0;
+    function onResize() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () { requestAnimationFrame(function () { F.renderMenu(); }); }, 150);
+    }
+    window.addEventListener('resize', onResize);
+    window.addEventListener('orientationchange', onResize);
 
     var fab = F.$('#fab');
     function setOpen(v) { dock.classList.toggle('open', v); F.$('#bd').style.display = v ? 'block' : 'none'; fab.setAttribute('aria-expanded', v ? 'true' : 'false'); if (v) dismissHint(); }

@@ -31,10 +31,10 @@
             for (var i = 0; i < ok.length; i++) {
                 var f = ok[i];
                 say(['正在加入 ' + (i + 1) + '/' + ok.length + '…'], true);
-                var data = await new Promise(function (res, rej) { var fr = new FileReader(); fr.onload = function () { res(fr.result); }; fr.onerror = function () { rej(fr.error); }; fr.readAsDataURL(f); });
+                var ab = await (f.arrayBuffer ? f.arrayBuffer() : new Promise(function (res, rej) { var fr = new FileReader(); fr.onload = function () { res(fr.result); }; fr.onerror = function () { rej(fr.error); }; fr.readAsArrayBuffer(f); }));
                 var full = f.name.replace(/\.[^.]+$/, ''), name = full.slice(0, NAME_MAX);
                 if (name !== full) cut.push(name);
-                var s = { id: 'c' + Date.now() + Math.random().toString(36).slice(2, 6), name: name, data: data };
+                var s = { id: 'c' + Date.now() + Math.random().toString(36).slice(2, 6), name: name, buf: ab, type: f.type || '' };
                 F.custom.push(s); F.dbPut(s); F.eq.push(s.id); F.loadBuf(s);
                 added++;
             }

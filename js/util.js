@@ -4,8 +4,8 @@ window.Fahhh = window.Fahhh || {};
     'use strict';
     F.$ = function (s) { return document.querySelector(s); };
     F.esc = function (s) {
-        return s.replace(/[&<>"]/g, function (c) {
-            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+        return s.replace(/[&<>"']/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
         });
     };
 })(window.Fahhh);

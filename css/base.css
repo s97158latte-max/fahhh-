@@ -34,3 +34,9 @@ h1{display:flex;align-items:center;gap:10px;margin:6px 0 4px;font-size:46px;lett
 #undoBar .btn{flex:none;padding:6px 12px;font-size:14px}
 @keyframes undoIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){#undoBar{animation:none}}
+/* 窄螢幕:有 ✏️/🗑 的列拆兩排,第一排播放鈕+名稱,第二排操作鈕靠右 */
+@media (max-width:420px){
+.row:has(.ren){flex-wrap:wrap;justify-content:flex-end;row-gap:6px}
+.row:has(.ren) .nm{flex:1 1 calc(100% - 70px)}
+}
+@media (max-width:380px){.row:has(.ren) .nm{flex-basis:calc(100% - 68px)}}

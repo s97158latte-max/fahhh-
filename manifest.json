@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "fahhh! 迷因音效按鈕",
+  "short_name": "fahhh!",
+  "description": "fahhh! 免費線上迷因音效板：一鍵播放 FAHHH、Bruh、Boom 等迷因音效，免安裝，還能上傳自己的音檔。Free meme soundboard.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "lang": "zh-Hant",
+  "categories": ["entertainment", "music"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

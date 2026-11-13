@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://s97158latte-max.github.io/fahhh-/sitemap.xml

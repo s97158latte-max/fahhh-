@@ -21,6 +21,8 @@ h1{display:flex;align-items:center;gap:10px;margin:6px 0 16px;font-family:Impact
 .del{flex:none;min-width:44px;min-height:44px;padding:6px 10px;font-size:18px;margin-inline-end:6px}
 .row .btn:not(.play){flex:none}
 .eq{white-space:nowrap;display:flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;font-weight:bold;flex:none;min-height:44px;padding:0 4px}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.eq svg{flex:none;width:24px;height:24px}
 .eq input{position:absolute;opacity:0;pointer-events:none}
 .eq b{display:inline-block;position:relative;width:32px;height:32px;border:3px solid #000;background:#fff;border-radius:255px 15px 225px 15px/15px 225px 15px 255px}
 .eq input:checked+b::after{content:'';position:absolute;left:50%;top:46%;width:9px;height:17px;border:solid #000;border-width:0 5px 5px 0;border-radius:2px 3px 2px 1px;transform:translate(-50%,-50%) rotate(40deg)}
@@ -81,7 +83,8 @@ h1{font-size:72px;gap:14px;margin:8px 0 20px}
 .nm-edit{font-size:21px;padding:8px 10px}
 .del{min-width:48px;min-height:48px;font-size:21px;margin-inline-end:6px}
 .ren{min-width:48px;min-height:48px;font-size:19px}
-.eq{font-size:17px;min-height:48px;gap:8px}
+.eq{min-height:48px;gap:8px}
+.eq svg{width:28px;height:28px}
 #undoBar{font-size:16px}
 #undoBar .btn{font-size:16px}
 }

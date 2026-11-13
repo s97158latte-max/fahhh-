@@ -34,7 +34,7 @@
             row.innerHTML = '<button class="btn play" aria-label="' + F.esc(F.t('list.play', { name: s.name })) + '">' + (s.emo || '🎵') + '</button><div class="nm">' + F.esc(s.name) + '</div>' +
                 (s.fn || s.lock ? '' : '<button class="btn ren" aria-label="' + F.esc(F.t('list.rename', { name: s.name })) + '">✏️</button>') +
                 (s.fn || s.lock ? '' : '<button class="btn del" aria-label="' + F.esc(F.t('list.delete', { name: s.name })) + '">🗑</button>') +
-                '<kbd class="key" aria-hidden="true"></kbd><label class="eq"><input type="checkbox"' + (F.eq.indexOf(s.id) > -1 ? ' checked' : '') + '><b></b>' + F.esc(F.t('list.equip')) + '</label>';
+                '<kbd class="key" aria-hidden="true"></kbd><label class="eq"><input type="checkbox"' + (F.eq.indexOf(s.id) > -1 ? ' checked' : '') + '><b></b><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#pin"/></svg><span class="sr-only">' + F.esc(F.t('list.equip')) + '</span></label>';
             var p = row.querySelector('.play');
             p.addEventListener('click', function () { F.play(s, p); });
             row.querySelector('input').addEventListener('change', function (e) {

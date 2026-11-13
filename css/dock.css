@@ -10,8 +10,8 @@
 .open .item{opacity:1;pointer-events:auto;visibility:visible;transition:transform .55s cubic-bezier(.34,1.56,.64,1) calc(var(--i) * 45ms),opacity .2s calc(var(--i) * 45ms),visibility 0s;transform:rotate(var(--a)) translateX(var(--r)) rotate(calc(-1 * var(--a))) scale(1)}
 .item i{font-style:normal;font-size:20px}
 .item u{text-decoration:none;font-size:11px;line-height:1.1;max-width:50px;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;word-break:break-all;text-align:center;margin-top:1px}
-#empty{display:none;position:absolute;right:78px;bottom:14px;width:170px;padding:8px;font-size:13px;font-weight:bold;background:#fff;border:3px solid #000;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;text-align:center}
-.open #empty.show{display:block}
+#empty{display:none;position:absolute;right:78px;bottom:14px;width:max-content;align-items:center;gap:8px;padding:8px 14px;font-size:28px;line-height:1;font-weight:bold;background:#fff;border:3px solid #000;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;text-align:center}
+.open #empty.show{display:flex}
 #hint{position:absolute;right:78px;bottom:18px;width:max-content;max-width:170px;padding:6px 10px;font-size:13px;font-weight:bold;background:#fff;border:3px solid #000;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;text-align:center;cursor:pointer}
 .open #hint{display:none}
 #fab.nudge{animation:fabNudge 1.4s ease-in-out 3}

@@ -53,7 +53,7 @@
             'upload.readfail': '讀取失敗的檔案'
         },
         en: {
-            'title': 'fahhh! meme soundboard | created by 邊境部署 EdgeDeploy',
+            'title': 'fahhh! 迷因音效按鈕｜Meme Soundboard｜created by 邊境部署 EdgeDeploy',
             'note': '(;´Д`) Your sounds only live in this browser. On iPhone, the Home Screen app and Safari don’t share them, so you’ll need to re-upload after adding to the Home Screen.',
             'upload.btn': '+ Upload',
             'credit': 'created by',
@@ -100,15 +100,13 @@
     };
     F.DICT = DICT;
 
-    // 先看使用者上次的選擇，否則依瀏覽器語言：zh 開頭用中文，其餘英文
+    // 只有使用者明確存過 en 才用英文；首次造訪一律繁中（利於爬蟲以中文渲染）
     F.detectLang = function () {
         try {
             var v = localStorage.getItem(KEY);
-            if (v === 'zh' || v === 'en') return v;
+            if (v === 'en') return 'en';
         } catch (e) { }
-        var nl = '';
-        try { nl = String(navigator.language || ''); } catch (e) { }
-        return /^zh/i.test(nl) ? 'zh' : 'en';
+        return 'zh';
     };
 
     F.lang = F.detectLang();

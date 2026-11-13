@@ -18,11 +18,9 @@
     var lang = (function () {
         try {
             var v = localStorage.getItem('fahhh_lang');
-            if (v === 'zh' || v === 'en') return v;
+            if (v === 'en') return 'en';
         } catch (e) { }
-        var nl = '';
-        try { nl = String(navigator.language || ''); } catch (e) { }
-        return /^zh/i.test(nl) ? 'zh' : 'en';
+        return 'zh';
     })();
 
     var repeat = false;

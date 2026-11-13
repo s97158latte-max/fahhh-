@@ -104,6 +104,9 @@
     /* 單聲道:任何音效觸發時,先淡出並停止目前所有聲音,再播新的 */
     function play(s, el) {
         flash(el);
+        /* 視覺回饋與「播放中」狀態:長度取 buffer 時長,合成音 700ms,Audio fallback 上限 3 秒 */
+        var pb = s.fn ? null : F.buf[s.id];
+        var end = F.hit ? F.hit(s, el, s.fn ? 700 : pb ? Math.max(150, pb.duration * 1000) : 3000) : null;
         if (navigator.vibrate) try { navigator.vibrate(50); } catch (e) { }
         var c = getCtx();
         stopAll();
@@ -124,7 +127,8 @@
                     a._revoke = function () { if (done) return; done = true; try { URL.revokeObjectURL(url); } catch (e) { } };
                     a.onended = a.onerror = a._revoke;
                 }
-                a.play().catch(function () { });
+                if (end) a.addEventListener('ended', end);
+                a.play().catch(function () { if (end) end(); });
             } catch (e) { }
             loadBuf(s);
         }

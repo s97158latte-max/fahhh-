@@ -4,7 +4,7 @@
     // 支援的副檔名單一來源(通用的在前,ogg 在 Safari/iOS 支援不完整放最後)
     var EXTS = ['mp3', 'm4a', 'wav', 'aac', 'flac', 'caf', 'ogg'];
     var EXT_RE = new RegExp('\\.(' + EXTS.join('|') + ')$', 'i');
-    var NAME_MAX = 14, MAX_BYTES = 10 * 1024 * 1024, MAX_SEC = 30, msgTimer = null;
+    var NAME_MAX = 14, MAX_BYTES = 10 * 1024 * 1024, MAX_SEC = 30, msgTimer = null, busy = false;
     var upBtn = F.$('#up'), msgEl = F.$('#upMsg');
     var SEP = function () { return F.t('sep'); };
     // sticky 訊息(不自動消失)用於處理中;其餘幾秒後淡出
@@ -35,8 +35,10 @@
     /* 換語言時舊訊息已是舊語言，直接清掉（處理中的進度會在下一個檔案時重新顯示） */
     F.onLang(function () { say([]); });
     upBtn.addEventListener('click', function () { F.$('#file').click(); });
-    F.$('#file').addEventListener('change', async function (e) {
-        var input = e.target, all = Array.prototype.slice.call(input.files);
+    // 按鈕選檔與拖放共用的處理流程;input 只有按鈕選檔才有(用來清空選取)
+    async function processFiles(all, input) {
+        if (busy) return;
+        busy = true;
         var ok = [], skipped = [];
         all.forEach(function (f) {
             (f.type.indexOf('audio') === 0 || EXT_RE.test(f.name) ? ok : skipped).push(f);
@@ -65,8 +67,9 @@
             /* 第一次成功上傳:主動展開一次資料保存提醒 */
             try { if (!localStorage.getItem('fahhh_store_info')) { localStorage.setItem('fahhh_store_info', '1'); if (F.showStoreInfo) F.showStoreInfo(); } } catch (err) { }
         }
-        F.saveEq(); F.renderList(); F.renderMenu(); input.value = '';
+        F.saveEq(); F.renderList(); F.renderMenu(); if (input) input.value = '';
         upBtn.disabled = false;
+        busy = false;
         var lines = [];
         if (added) lines.push(F.t('upload.added', { n: added }));
         if (skipped.length) lines.push(F.t('upload.skipped', { n: skipped.length, names: names(skipped), formats: EXTS.join(SEP()) }));
@@ -76,5 +79,87 @@
         if (cut.length) lines.push(F.t('upload.cut', { names: cut.slice(0, 3).join(SEP()) + (cut.length > 3 ? '…' : '') }));
         if (added && !F.db) lines.push(F.t('upload.nopersist'));
         say(lines);
+    }
+    F.$('#file').addEventListener('change', function (e) {
+        processFiles(Array.prototype.slice.call(e.target.files), e.target);
     });
+
+    /* ---------- 拖放上傳:整個頁面都是放置區 ---------- */
+    var root = document.documentElement, depth = 0, hint = null, hintTxt = null;
+    function hasFiles(e) {
+        var t = e.dataTransfer && e.dataTransfer.types;
+        return !!t && Array.prototype.indexOf.call(t, 'Files') >= 0;
+    }
+    // 載入畫面與導覽期間不接受放置(仍要攔下,否則瀏覽器會直接開啟該檔案)
+    function accepting() { return !root.classList.contains('booting') && !root.classList.contains('touring'); }
+    function buildHint() {
+        var NS = 'http://www.w3.org/2000/svg';
+        hint = document.createElement('div');
+        hint.id = 'dropHint';
+        hint.setAttribute('aria-hidden', 'true');
+        var box = document.createElement('div');
+        box.className = 'dropBox';
+        var svg = document.createElementNS(NS, 'svg');
+        svg.setAttribute('viewBox', '0 0 40 40');
+        var path = document.createElementNS(NS, 'path');
+        path.setAttribute('d', 'M20 5 L20 31 M8 20 L20 32 L32 20');
+        svg.appendChild(path);
+        hintTxt = document.createElement('span');
+        hintTxt.textContent = F.t('upload.drop');
+        box.appendChild(svg); box.appendChild(hintTxt);
+        hint.appendChild(box);
+        document.body.appendChild(hint);
+    }
+    function showHint() {
+        if (!hint) buildHint();
+        hint.classList.add('on');
+    }
+    function clearHint() {
+        depth = 0;
+        if (hint) hint.classList.remove('on');
+    }
+    F.onLang(function () { if (hintTxt) hintTxt.textContent = F.t('upload.drop'); });
+    // 只取檔案:略過資料夾與非檔案項目
+    function droppedFiles(dt) {
+        var out = [], items = dt.items;
+        if (items && items.length) {
+            for (var i = 0; i < items.length; i++) {
+                var it = items[i];
+                if (it.kind !== 'file') continue;
+                var en = it.webkitGetAsEntry && it.webkitGetAsEntry();
+                if (en && en.isDirectory) continue;
+                var f = it.getAsFile();
+                if (f) out.push(f);
+            }
+            return out;
+        }
+        return Array.prototype.slice.call(dt.files || []);
+    }
+    document.addEventListener('dragenter', function (e) {
+        if (!hasFiles(e)) return;
+        e.preventDefault();
+        depth++;
+        if (accepting() && !busy) showHint();
+    });
+    document.addEventListener('dragover', function (e) {
+        if (!hasFiles(e)) return;
+        e.preventDefault();
+        e.dataTransfer.dropEffect = accepting() && !busy ? 'copy' : 'none';
+    });
+    document.addEventListener('dragleave', function (e) {
+        if (!hasFiles(e)) return;
+        depth = Math.max(0, depth - 1);
+        if (!depth) clearHint();
+    });
+    document.addEventListener('drop', function (e) {
+        if (!hasFiles(e)) return;
+        e.preventDefault();
+        clearHint();
+        if (!accepting() || busy) return;
+        var files = droppedFiles(e.dataTransfer);
+        if (files.length) processFiles(files, null);
+    });
+    document.addEventListener('dragend', clearHint);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') clearHint(); });
+    window.addEventListener('blur', clearHint);
 })(window.Fahhh);

@@ -1,13 +1,19 @@
 /* 小白點 */
 #bd{position:fixed;inset:0;display:none;z-index:50;background:rgba(255,255,255,.85)}
 #dock{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));width:68px;height:68px;z-index:100}
-#fab{position:absolute;inset:0;padding:0;display:grid;place-items:center;border-width:4px;border-radius:60% 40% 55% 45%/50% 60% 40% 50%;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+#fab{position:absolute;inset:0;padding:0;display:grid;place-items:center;border-width:4px;border-radius:60% 40% 55% 45%/50% 60% 40% 50%}
 .open #fab{transform:rotate(-14deg) scale(.92)}
 #ring{position:absolute;left:34px;top:34px;width:0;height:0}
 .item{position:absolute;left:-27px;top:-27px;width:54px;height:54px;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;opacity:0;pointer-events:none;visibility:hidden;
- transform:rotate(var(--a)) translateX(0) rotate(calc(-1 * var(--a))) scale(.2);
- transition:transform .55s cubic-bezier(.34,1.56,.64,1) calc(var(--i) * 45ms),opacity .2s calc(var(--i) * 45ms),visibility 0s linear calc(.6s + var(--i) * 45ms)}
-.open .item{opacity:1;pointer-events:auto;visibility:visible;transition:transform .55s cubic-bezier(.34,1.56,.64,1) calc(var(--i) * 45ms),opacity .2s calc(var(--i) * 45ms),visibility 0s;transform:rotate(var(--a)) translateX(var(--r)) rotate(calc(-1 * var(--a))) scale(1)}
+ transform:rotate(var(--a)) translateX(0) rotate(calc(-1 * var(--a))) scale(.2)}
+/* 展開/收合的過渡由 js/menu.js 的彈簧以 inline transform/opacity 驅動;這裡只定義靜止狀態(動畫結束會清掉 inline) */
+.open .item{opacity:1;pointer-events:auto;visibility:visible;transform:rotate(var(--a)) translateX(var(--r)) rotate(calc(-1 * var(--a))) scale(1)}
+/* 減少動態:不彈簧、不位移不縮放,只做 150ms 淡入淡出 */
+@media (prefers-reduced-motion:reduce){
+.item,.open .item{transform:rotate(var(--a)) translateX(var(--r)) rotate(calc(-1 * var(--a)));transition:opacity .15s linear,visibility 0s linear .15s}
+.open .item{transition:opacity .15s linear,visibility 0s}
+.open #fab{transform:none}
+}
 .item i{font-style:normal;font-size:20px}
 .item u{text-decoration:none;font-size:11px;line-height:1.1;max-width:50px;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;word-break:break-all;text-align:center;margin-top:1px}
 #empty{display:none;position:absolute;right:78px;bottom:14px;width:max-content;align-items:center;gap:8px;padding:8px 14px;font-size:28px;line-height:1;font-weight:bold;background:#fff;border:3px solid #000;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;text-align:center}

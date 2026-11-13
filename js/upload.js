@@ -1,6 +1,9 @@
 /* ---------- 上傳 ---------- */
 (function (F) {
     'use strict';
+    // 支援的副檔名單一來源(通用的在前,ogg 在 Safari/iOS 支援不完整放最後)
+    var EXTS = ['mp3', 'm4a', 'wav', 'aac', 'flac', 'caf', 'ogg'];
+    var EXT_RE = new RegExp('\\.(' + EXTS.join('|') + ')$', 'i');
     var NAME_MAX = 14, MAX_BYTES = 10 * 1024 * 1024, MAX_SEC = 30, msgTimer = null;
     var upBtn = F.$('#up'), msgEl = F.$('#upMsg');
     // sticky 訊息(不自動消失)用於處理中;其餘幾秒後淡出
@@ -26,12 +29,14 @@
                 function () { return { err: 'bad' }; });
     }
     function names(list) { return list.slice(0, 3).map(function (x) { return x.name; }).join('、') + (list.length > 3 ? '…' : ''); }
+    // 用同一份清單設定 accept,index.html 內的值只當無 JS 時的後備
+    F.$('#file').setAttribute('accept', ['audio/*'].concat(EXTS.map(function (x) { return '.' + x; })).join(','));
     upBtn.addEventListener('click', function () { F.$('#file').click(); });
     F.$('#file').addEventListener('change', async function (e) {
         var input = e.target, all = Array.prototype.slice.call(input.files);
         var ok = [], skipped = [];
         all.forEach(function (f) {
-            (f.type.indexOf('audio') === 0 || /\.(mp3|m4a|wav|ogg|aac|flac|caf)$/i.test(f.name) ? ok : skipped).push(f);
+            (f.type.indexOf('audio') === 0 || EXT_RE.test(f.name) ? ok : skipped).push(f);
         });
         var added = 0, cut = [], big = [], long_ = [], bad = [];
         upBtn.disabled = true;
@@ -57,10 +62,10 @@
         upBtn.disabled = false;
         var lines = [];
         if (added) lines.push('已加入 ' + added + ' 個,已自動裝備');
-        if (skipped.length) lines.push('略過 ' + skipped.length + ' 個不是音訊的檔案(' + names(skipped) + '),可用格式:mp3、m4a、wav、ogg、aac');
+        if (skipped.length) lines.push('略過 ' + skipped.length + ' 個不是音訊的檔案(' + names(skipped) + '),可用格式:' + EXTS.join('、'));
         if (big.length) lines.push('略過 ' + big.length + ' 個太大的檔案(單檔上限 10MB):' + names(big));
         if (long_.length) lines.push('略過 ' + long_.length + ' 個太長的檔案(上限 30 秒):' + names(long_));
-        if (bad.length) lines.push(bad.length + ' 個檔案無法播放,可能不是有效的音訊檔:' + names(bad));
+        if (bad.length) lines.push(bad.length + ' 個檔案無法播放:' + names(bad) + '(可能不是有效的音訊檔,或這個瀏覽器不支援此格式;建議改用 mp3 或 m4a)');
         if (cut.length) lines.push('名稱太長,已縮短為 ' + cut.slice(0, 3).join('、') + (cut.length > 3 ? '…' : ''));
         if (added && !F.db) lines.push('這個瀏覽器無法保存音檔,重新整理後會消失');
         say(lines);

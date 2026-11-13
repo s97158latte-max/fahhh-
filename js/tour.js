@@ -14,10 +14,11 @@
     var NEXT = '<svg viewBox="0 0 40 24" width="32" height="20" aria-hidden="true" focusable="false"><path d="M3 12C12 9 22 14 36 12M28 4L37 12L28 20" fill="none" stroke="#000" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
     var STEPS = [
-        { sel: '#list .row:first-child .eq', icon: 'tick', key: 'tour.s1' },
-        { sel: '#fab', icon: 'dot', key: 'tour.s2', fixed: true },
-        { sel: '#ring .item', icon: 'tap', key: 'tour.s3', open: true, fixed: true },
-        { sel: '.row .key:not(:empty)', icon: 'key', key: 'tour.s4', desktop: true }
+        { sel: '#list .row:first-child .play', icon: 'tap', key: 'tour.s1' },
+        { sel: '#list .row:first-child .eq', icon: 'tick', key: 'tour.s2' },
+        { sel: '#fab', icon: 'dot', key: 'tour.s3', fixed: true },
+        { sel: '#ring .item', icon: 'tap', key: 'tour.s4', open: true, fixed: true },
+        { sel: '.row .key:not(:empty)', icon: 'key', key: 'tour.s5', desktop: true }
     ];
 
     var tour, spot, arrow, word, wordTxt, wordIc, live, dots, nextBtn, skipBtn;
@@ -67,9 +68,12 @@
         var ay = below ? r.bottom + pad - 10 : r.top - pad - 110;
         arrow.style.left = ax + 'px';
         arrow.style.top = ay + 'px';
-        var w = word.offsetWidth;
-        word.style.left = clamp(ax + 70, w / 2 + 8, vw - w / 2 - 8) + 'px';
-        word.style.top = (below ? ay + 114 : ay + 6) + 'px';
+        // 文字可能換行:以實際寬高夾在視窗內(above 時 top 是文字底邊)
+        var w = word.offsetWidth, h = word.offsetHeight, m = 8;
+        word.style.left = clamp(ax + 70, w / 2 + m, vw - w / 2 - m) + 'px';
+        var wt = below ? ay + 114 : ay + 6;
+        wt = below ? Math.min(wt, vh - h - 80) : Math.max(wt, h + m);
+        word.style.top = wt + 'px';
     }
     function schedule() { if (!raf) raf = requestAnimationFrame(place); }
     function onResize() { clearTimeout(resizeT); schedule(); resizeT = setTimeout(place, 300); }

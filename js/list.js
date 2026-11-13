@@ -1,14 +1,22 @@
 /* ---------- 資料庫清單 ---------- */
 (function (F) {
     'use strict';
+    var flushRename = null;
     F.renameSound = function (s, row) {
+        if (flushRename) flushRename();
         var nm = row.querySelector('.nm'), done = false;
         var inp = document.createElement('input');
         inp.type = 'text'; inp.className = 'nm-edit'; inp.maxLength = 14; inp.value = s.name;
         inp.setAttribute('aria-label', '重新命名 ' + s.name);
         nm.replaceWith(inp); inp.focus(); inp.select();
+        /* 編輯中按列內其他按鈕:阻止 mousedown 的焦點轉移,輸入框不 blur、不被提前重繪,click 才能正常送達 */
+        var L = F.$('#list');
+        function keepFocus(e) { if (e.target !== inp && e.target.closest && e.target.closest('.row')) e.preventDefault(); }
+        L.addEventListener('mousedown', keepFocus);
+        flushRename = function () { finish(true); };
         function finish(save) {
             if (done) return; done = true;
+            L.removeEventListener('mousedown', keepFocus); flushRename = null;
             var v = inp.value.trim();
             if (save && v && v !== s.name) { s.name = v; F.dbPut(s); }
             F.renderList(); F.renderMenu();
@@ -60,6 +68,7 @@
         return bar;
     }
     F.softDelete = function (s) {
+        if (flushRename) flushRename(); /* 進行中的改名先儲存並收掉輸入框 */
         commitPending();
         var rec = { s: s, idx: F.custom.indexOf(s), eqIdx: F.eq.indexOf(s.id), buf: F.buf[s.id] };
         F.custom = F.custom.filter(function (x) { return x.id !== s.id; });

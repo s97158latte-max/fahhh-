@@ -75,7 +75,7 @@ js/
   sounds.js           內建音效定義
   storage.js          IndexedDB（自訂音效）與 localStorage（釘選、語言）
   list.js             音效清單、改名、刪除與復原
-  menu.js             輪狀快捷選單
+  menu.js             輪狀快捷選單(可中斷的彈簧展開/收合動畫)
   keys.js             鍵盤快捷鍵
   tour.js             新手導覽
   hints.js            情境提示（iPhone 靜音鍵提醒、資料保存說明面板）

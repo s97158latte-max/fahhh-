@@ -3,7 +3,7 @@
  * 載入畫面控制（同步載入於 <head>，極小、不依賴其他腳本）。
  * 沒有 JS 時不會加上 html.booting，載入畫面的 CSS 永遠不顯示。
  * 收起條件（全部成立）：DOMContentLoaded、字型就緒(或 2000ms)、fahhh:ready(後備：load 後再等 4000ms)、
- * 已顯示至少 700ms（同 session 再次載入 300ms）；絕對上限 6000ms 強制收起。
+ * 已顯示至少 700ms（同 session 再次載入 300ms）；絕對上限 3500ms 強制收起。
  */
 (function () {
     var d = document, root = d.documentElement, win = window;
@@ -12,7 +12,7 @@
         en: ['Loading memes…', 'FAHHH is on the way (╥﹏╥)', 'Hold on a sec…']
     };
     var SR = { zh: '載入中', en: 'Loading' };
-    var MIN_FIRST = 700, MIN_REPEAT = 300, FONT_MAX = 2000, READY_FALLBACK = 4000, HARD_MAX = 6000;
+    var MIN_FIRST = 700, MIN_REPEAT = 300, FONT_MAX = 2000, READY_FALLBACK = 4000, HARD_MAX = 3500;
     var ROTATE = 900, STAMP = 260, FADE = 200;
 
     var lang = (function () {

@@ -7,15 +7,18 @@
         ring.innerHTML = '';
         var list = F.all().filter(function (s) { return F.eq.indexOf(s.id) > -1; });
         F.$('#empty').classList.toggle('show', list.length === 0);
-        var caps = [4, 6, 8], rad = [110, 185, 260], idx = 0, r = 0, n = list.length, k = 0;
+        // 依半徑算每圈容量:弧長(90°) / 間距;半徑逐圈 +75,最外圈不超出螢幕左/上緣
+        var maxR = Math.min(window.innerWidth - 87, window.innerHeight - 52 - 27 - 56), idx = 0, r = 0, n = list.length, k = 0;
         while (idx < n) {
-            var cap = r < 2 ? caps[r] : n - idx, take = Math.min(cap, n - idx);
+            var rr = 120 + 75 * r;
+            if (rr > maxR) break;
+            var cap = Math.floor(Math.PI / 2 * rr / 60) + 1, take = Math.min(cap, n - idx);
             for (var j = 0; j < take; j++) {
                 var s = list[idx + j], ang = take === 1 ? 225 : 180 + 90 * j / (take - 1);
                 var b = document.createElement('button'); b.className = 'btn item';
-                b.setAttribute('aria-label', '播放 ' + s.name);
+                b.setAttribute('aria-label', '播放 ' + s.name); b.title = s.name;
                 b.style.setProperty('--a', ang + 'deg');
-                b.style.setProperty('--r', rad[Math.min(r, 2)] + 'px');
+                b.style.setProperty('--r', rr + 'px');
                 b.style.setProperty('--i', k++);
                 b.innerHTML = '<i>' + (s.emo || '🎵') + '</i><u>' + F.esc(s.name) + '</u>';
                 (function (s, b) {
@@ -27,6 +30,9 @@
             }
             idx += take; r++;
         }
+        var more = F.$('#more'), left = n - idx;
+        more.textContent = left > 0 ? '還有 ' + left + ' 個沒顯示,請取消勾選一些' : '';
+        more.classList.toggle('show', left > 0);
     };
 
     var fab = F.$('#fab');

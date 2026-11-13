@@ -13,8 +13,20 @@ html{overflow-x:hidden}
 @media (prefers-reduced-motion:reduce){.wj{animation:none !important}}
 @media (min-width:820px){
  .hd .sub{max-width:none}
- .wj{position:fixed}
+ .wj{position:fixed;display:none}
  .ft{height:0}
- #wjA{left:2vw;bottom:-5vh;top:auto;width:clamp(100px,calc((100vw - 560px)/2 - 20px),280px);--r:-5deg}
- #wjB{right:3vw;left:auto;top:11vh;width:clamp(90px,calc((100vw - 560px)/2 - 40px),230px);--r:7deg}
+ #wjA{left:2vw;bottom:-5vh;top:auto;--r:-5deg}
+ #wjB{right:3vw;left:auto;top:11vh;--r:7deg}
+}
+/* 內容欄 960px:兩側空間 >= 1200px 才放得下人物,以 (100vw - 內容欄)/2 算寬度 */
+@media (min-width:1200px) and (max-width:1399px){
+ .wj{display:block}
+ #wjA{width:clamp(96px,calc((100vw - 960px)/2 - 20px),280px)}
+ #wjB{width:clamp(80px,calc((100vw - 960px)/2 - 40px),230px)}
+}
+/* 內容欄 1240px(3 欄):>= 1500px 才放得下 */
+@media (min-width:1500px){
+ .wj{display:block}
+ #wjA{width:clamp(96px,calc((100vw - 1240px)/2 - 20px),280px)}
+ #wjB{width:clamp(80px,calc((100vw - 1240px)/2 - 40px),230px)}
 }

@@ -59,26 +59,26 @@
         <h1>fahhh! <svg width="52" height="52">
                 <use href="#wj" />
             </svg></h1>
-        <p class="sub">迷因總資料庫。勾選「裝備」，右下角的小白點就會長出那顆按鈕 (╥﹏╥)</p>
-        <p class="sub">沒聲音？先檢查 iPhone 側邊的靜音鍵和音量</p>
+        <p class="sub" data-i18n="sub1">迷因總資料庫。勾選「裝備」，右下角的小白點就會長出那顆按鈕 (╥﹏╥)</p>
+        <p class="sub" data-i18n="sub2">沒聲音？先檢查 iPhone 側邊的靜音鍵和音量</p>
         <img class="wj" id="wjB" alt="" aria-hidden="true" draggable="false" src="images/wjB.png" width="377" height="582" decoding="async">
     </div>
-    <div class="note">(;´Д`) 音檔只存在這個瀏覽器；iPhone 的「主畫面 App」和 Safari 各自獨立，加入主畫面後要重新上傳。</div>
-    <button class="btn" id="up">＋ 上傳新迷因</button>
+    <div class="note" data-i18n="note">(;´Д`) 音檔只存在這個瀏覽器；iPhone 的「主畫面 App」和 Safari 各自獨立，加入主畫面後要重新上傳。</div>
+    <button class="btn" id="up" data-i18n="upload.btn">＋ 上傳新迷因</button>
     <div id="upMsg" role="status" aria-live="polite" hidden></div>
     <input type="file" id="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.aac" multiple hidden>
     <div id="list"></div>
 
     <div class="ft"><img class="wj" id="wjA" alt="" aria-hidden="true" draggable="false" src="images/wjA.png" width="318" height="582" loading="lazy" decoding="async"></div>
-    <div id="credit"><span>created by</span><img alt="邊境部署 EdgeDeploy" draggable="false" src="images/edgedeploy-horizontal-blue.png" width="2400" height="597" decoding="async">
-        <button class="btn" id="lang" type="button" lang="en" aria-label="切換成英文">EN</button>
+    <div id="credit"><span data-i18n="credit">created by</span><img alt="邊境部署 EdgeDeploy" data-i18n-alt="brand" draggable="false" src="images/edgedeploy-horizontal-blue.png" width="2400" height="597" decoding="async">
+        <button class="btn" id="lang" type="button" lang="en" aria-label="切換成英文" data-i18n-aria="lang.aria" data-i18n="lang.btn">EN</button>
     </div>
     <div id="bd"></div>
     <div id="dock">
-        <div id="empty">還沒有裝備任何迷因 😭<br>去資料庫勾選！</div>
+        <div id="empty"><span data-i18n="empty.1">還沒有裝備任何迷因 😭</span><br><span data-i18n="empty.2">去資料庫勾選！</span></div>
         <div id="more" role="status"></div>
         <div id="ring"></div>
-        <button class="btn" id="fab" aria-label="迷因快捷選單"><svg width="48" height="48">
+        <button class="btn" id="fab" aria-label="迷因快捷選單" data-i18n-aria="fab.aria"><svg width="48" height="48">
                 <use href="#wj" />
             </svg></button>
     </div>

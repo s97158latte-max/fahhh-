@@ -2,7 +2,8 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 html,body{margin:0;background:#fff;color:#000;font-family:'Comic Sans MS','Comic Sans','Iansui','Comic Neue','PingFang TC','Noto Sans TC','Microsoft JhengHei',cursive,sans-serif}
 body{max-width:560px;margin:0 auto;padding:62px 16px 150px}
-h1{display:flex;align-items:center;gap:10px;margin:6px 0 4px;font-size:46px;letter-spacing:-1px}
+h1{display:flex;align-items:center;gap:10px;margin:6px 0 8px;font-family:Impact,'Anton','Arial Narrow Bold','Haettenschweiler',sans-serif;font-weight:400;font-size:clamp(48px,17vw,60px);line-height:1;letter-spacing:1px;text-transform:uppercase;color:#fff;-webkit-text-stroke:6px #000;paint-order:stroke fill}
+@supports not (paint-order:stroke fill){h1{-webkit-text-stroke:0;text-shadow:-3px 0 #000,3px 0 #000,0 -3px #000,0 3px #000,-2px -2px #000,2px -2px #000,-2px 2px #000,2px 2px #000}}
 .sub{margin:0 0 14px;font-size:14px;line-height:1.5}
 .btn{font:inherit;font-weight:bold;color:#000;background:#fff;border:3px solid #000;cursor:pointer;padding:8px 14px;border-radius:255px 15px 225px 15px/15px 225px 15px 255px}
 .btn:not(.item):not(#fab):active{transform:translate(2px,2px)}

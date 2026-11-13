@@ -9,7 +9,7 @@
  *   使用者開啟頁面時會先看到快取版本，同時背景抓取新版並更新快取，下次開啟即為新版。
  *   SW 更新快取後不會自動重整頁面。
  */
-var CACHE = 'fahhh-v8';
+var CACHE = 'fahhh-v9';
 
 // 核心：任何一個失敗都讓 install 失敗（瀏覽器之後會重試）。
 var CORE_ASSETS = [

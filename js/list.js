@@ -9,7 +9,7 @@
                 (s.fn || s.lock ? '' : '<button class="btn del">🗑</button>') +
                 '<label class="eq"><input type="checkbox"' + (F.eq.indexOf(s.id) > -1 ? ' checked' : '') + '><b></b>裝備</label>';
             var p = row.querySelector('.play');
-            p.addEventListener('pointerdown', function (e) { e.preventDefault(); F.play(s, p); });
+            p.addEventListener('click', function () { F.play(s, p); });
             row.querySelector('input').addEventListener('change', function (e) {
                 var i = F.eq.indexOf(s.id);
                 if (e.target.checked && i < 0) F.eq.push(s.id);

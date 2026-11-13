@@ -56,3 +56,28 @@ h1{display:flex;align-items:center;gap:10px;margin:6px 0 8px;font-family:Impact,
 }
 /* 正在播放:唯一的強調色(螢光黃底、黑字黑框);.flash 紅色仍是按下瞬間第一拍 */
 .row.playing,.item.playing{background:var(--hit);color:#000}
+/* ---------- 電腦版版面 ---------- */
+@media (min-width:820px){
+body{max-width:960px;padding:62px 24px 170px}
+h1{font-size:72px;gap:14px;margin:8px 0 12px}
+.sub{font-size:17px;margin-bottom:16px}
+.note{font-size:16px;padding:12px 14px;margin:16px 0}
+#up{font-size:24px;padding:16px}
+#upMsg{font-size:16px;padding:8px 12px;margin-top:10px}
+#list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 20px;align-items:stretch;margin-top:18px}
+.row{position:relative;flex-wrap:wrap;justify-content:flex-end;align-content:center;gap:8px 12px;margin:0;padding:12px;contain-intrinsic-size:auto 150px}
+.row .play{width:66px;height:66px;font-size:32px}
+.row .nm{flex:1 1 calc(100% - 82px);font-size:21px;padding-inline-end:36px}
+.row .key{position:absolute;top:6px;right:10px}
+.nm-edit{font-size:21px;padding:8px 10px}
+.del{min-width:48px;min-height:48px;font-size:21px;margin-inline-end:6px}
+.ren{min-width:48px;min-height:48px;font-size:19px}
+.eq{font-size:17px;min-height:48px;gap:8px}
+#undoBar{font-size:16px}
+#undoBar .btn{font-size:16px}
+}
+/* 3 欄:內容欄再加寬 */
+@media (min-width:1500px){
+body{max-width:1240px}
+#list{grid-template-columns:repeat(3,minmax(0,1fr))}
+}

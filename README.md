@@ -78,6 +78,7 @@ js/
   menu.js             輪狀快捷選單
   keys.js             鍵盤快捷鍵
   tour.js             新手導覽
+  hints.js            情境提示（iPhone 靜音鍵提醒、資料保存說明面板）
   upload.js           上傳、驗證與訊息
   main.js             啟動流程、service worker 註冊
 ```
@@ -96,8 +97,10 @@ js/
 | localStorage `fahhh_eq` | 已釘選的音效清單 |
 | localStorage `fahhh_lang` | 語言 |
 | localStorage `fahhh_tour` | 是否看過新手導覽 |
+| localStorage `fahhh_silent_hint` | 是否已顯示過 iPhone 靜音鍵提醒 |
+| localStorage `fahhh_store_info` | 是否已在第一次上傳後主動展開過資料保存說明 |
 
-**資料只存在使用者自己的瀏覽器。** iPhone 的「主畫面 App」與 Safari 的儲存空間是分開的，加入主畫面後需要重新上傳。第一次成功上傳後，頁面會向瀏覽器申請持久保存（`navigator.storage.persist()`），降低被瀏覽器清除的機率，但不保證。
+**資料只存在使用者自己的瀏覽器。**頁面上不放常駐的長段說明，改用圖示：上傳鈕旁的 💾 可展開這項提醒，第一次成功上傳後也會主動展開一次。 iPhone 的「主畫面 App」與 Safari 的儲存空間是分開的，加入主畫面後需要重新上傳。第一次成功上傳後，頁面會向瀏覽器申請持久保存（`navigator.storage.persist()`），降低被瀏覽器清除的機率，但不保證。
 
 ## 開發注意事項
 

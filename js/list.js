@@ -39,12 +39,45 @@
             if (rn) rn.addEventListener('click', function () { F.renameSound(s, row); });
             var d = row.querySelector('.del');
             if (d) d.addEventListener('click', function () {
-                if (!confirm('刪除「' + s.name + '」？(つД｀)')) return;
-                F.custom = F.custom.filter(function (x) { return x.id !== s.id; });
-                F.eq = F.eq.filter(function (x) { return x !== s.id; });
-                delete F.buf[s.id]; F.dbDel(s.id); F.saveEq(); F.renderList(); F.renderMenu();
+                F.softDelete(s);
             });
             L.appendChild(row);
         });
+    };
+    /* ---------- 刪除可復原 ---------- */
+    var pend = null, bar = null;
+    function commitPending() {
+        if (!pend) return;
+        clearTimeout(pend.timer); F.dbDel(pend.s.id);
+        pend = null;
+        if (bar) bar.hidden = true;
+    }
+    function ensureBar() {
+        if (bar) return bar;
+        bar = document.createElement('div'); bar.id = 'undoBar';
+        bar.setAttribute('role', 'status'); bar.setAttribute('aria-live', 'polite'); bar.hidden = true;
+        document.body.appendChild(bar);
+        return bar;
+    }
+    F.softDelete = function (s) {
+        commitPending();
+        var rec = { s: s, idx: F.custom.indexOf(s), eqIdx: F.eq.indexOf(s.id), buf: F.buf[s.id] };
+        F.custom = F.custom.filter(function (x) { return x.id !== s.id; });
+        F.eq = F.eq.filter(function (x) { return x !== s.id; });
+        delete F.buf[s.id]; F.saveEq(); F.renderList(); F.renderMenu();
+        rec.timer = setTimeout(function () { if (pend === rec) commitPending(); }, 6000);
+        pend = rec;
+        var b = ensureBar(); b.innerHTML = '';
+        var m = document.createElement('span'); m.textContent = '已刪除「' + s.name + '」';
+        var u = document.createElement('button'); u.type = 'button'; u.className = 'btn'; u.textContent = '復原';
+        u.addEventListener('click', function () {
+            if (pend !== rec) return;
+            clearTimeout(rec.timer); pend = null; b.hidden = true;
+            F.custom.splice(Math.min(rec.idx < 0 ? F.custom.length : rec.idx, F.custom.length), 0, rec.s);
+            if (rec.buf) F.buf[rec.s.id] = rec.buf;
+            if (rec.eqIdx > -1 && F.eq.indexOf(rec.s.id) < 0) F.eq.splice(Math.min(rec.eqIdx, F.eq.length), 0, rec.s.id);
+            F.saveEq(); F.renderList(); F.renderMenu();
+        });
+        b.appendChild(m); b.appendChild(u); b.hidden = false;
     };
 })(window.Fahhh);

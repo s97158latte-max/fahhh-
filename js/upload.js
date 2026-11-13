@@ -6,6 +6,7 @@
     var EXT_RE = new RegExp('\\.(' + EXTS.join('|') + ')$', 'i');
     var NAME_MAX = 14, MAX_BYTES = 10 * 1024 * 1024, MAX_SEC = 30, msgTimer = null;
     var upBtn = F.$('#up'), msgEl = F.$('#upMsg');
+    var SEP = function () { return F.t('sep'); };
     // sticky 訊息(不自動消失)用於處理中;其餘幾秒後淡出
     function say(lines, sticky) {
         clearTimeout(msgTimer);
@@ -28,9 +29,11 @@
             .then(function (b) { return b.duration > MAX_SEC ? { err: 'long' } : { buf: b }; },
                 function () { return { err: 'bad' }; });
     }
-    function names(list) { return list.slice(0, 3).map(function (x) { return x.name; }).join('、') + (list.length > 3 ? '…' : ''); }
+    function names(list) { return list.slice(0, 3).map(function (x) { return x.name; }).join(SEP()) + (list.length > 3 ? '…' : ''); }
     // 用同一份清單設定 accept,index.html 內的值只當無 JS 時的後備
     F.$('#file').setAttribute('accept', ['audio/*'].concat(EXTS.map(function (x) { return '.' + x; })).join(','));
+    /* 換語言時舊訊息已是舊語言，直接清掉（處理中的進度會在下一個檔案時重新顯示） */
+    F.onLang(function () { say([]); });
     upBtn.addEventListener('click', function () { F.$('#file').click(); });
     F.$('#file').addEventListener('change', async function (e) {
         var input = e.target, all = Array.prototype.slice.call(input.files);
@@ -43,7 +46,7 @@
         try {
             for (var i = 0; i < ok.length; i++) {
                 var f = ok[i];
-                say(['正在加入 ' + (i + 1) + '/' + ok.length + '…'], true);
+                say([F.t('upload.progress', { i: i + 1, n: ok.length })], true);
                 if (f.size > MAX_BYTES) { big.push(f); continue; }
                 var ab = await (f.arrayBuffer ? f.arrayBuffer() : new Promise(function (res, rej) { var fr = new FileReader(); fr.onload = function () { res(fr.result); }; fr.onerror = function () { rej(fr.error); }; fr.readAsArrayBuffer(f); }));
                 var v = await validateAudio(f, ab);
@@ -55,19 +58,19 @@
                 added++;
             }
         } catch (err) {
-            skipped.push({ name: '讀取失敗的檔案' });
+            skipped.push({ name: F.t('upload.readfail') });
         }
         if (added) F.requestPersist();
         F.saveEq(); F.renderList(); F.renderMenu(); input.value = '';
         upBtn.disabled = false;
         var lines = [];
-        if (added) lines.push('已加入 ' + added + ' 個,已自動裝備');
-        if (skipped.length) lines.push('略過 ' + skipped.length + ' 個不是音訊的檔案(' + names(skipped) + '),可用格式:' + EXTS.join('、'));
-        if (big.length) lines.push('略過 ' + big.length + ' 個太大的檔案(單檔上限 10MB):' + names(big));
-        if (long_.length) lines.push('略過 ' + long_.length + ' 個太長的檔案(上限 30 秒):' + names(long_));
-        if (bad.length) lines.push(bad.length + ' 個檔案無法播放:' + names(bad) + '(可能不是有效的音訊檔,或這個瀏覽器不支援此格式;建議改用 mp3 或 m4a)');
-        if (cut.length) lines.push('名稱太長,已縮短為 ' + cut.slice(0, 3).join('、') + (cut.length > 3 ? '…' : ''));
-        if (added && !F.db) lines.push('這個瀏覽器無法保存音檔,重新整理後會消失');
+        if (added) lines.push(F.t('upload.added', { n: added }));
+        if (skipped.length) lines.push(F.t('upload.skipped', { n: skipped.length, names: names(skipped), formats: EXTS.join(SEP()) }));
+        if (big.length) lines.push(F.t('upload.big', { n: big.length, mb: MAX_BYTES / 1024 / 1024, names: names(big) }));
+        if (long_.length) lines.push(F.t('upload.long', { n: long_.length, sec: MAX_SEC, names: names(long_) }));
+        if (bad.length) lines.push(F.t('upload.bad', { n: bad.length, names: names(bad) }));
+        if (cut.length) lines.push(F.t('upload.cut', { names: cut.slice(0, 3).join(SEP()) + (cut.length > 3 ? '…' : '') }));
+        if (added && !F.db) lines.push(F.t('upload.nopersist'));
         say(lines);
     });
 })(window.Fahhh);

@@ -1,6 +1,7 @@
 /* ---------- 啟動 ---------- */
 (function (F) {
     'use strict';
+    F.onLang(function () { F.renderList(); F.renderMenu(); });
     document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
     F.renderList(); F.renderMenu(); F.BUILTIN.forEach(F.loadBuf);
     F.openDB().then(function (d) { F.db = d; return F.dbAll(); }).then(function (rows) {

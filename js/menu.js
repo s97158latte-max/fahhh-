@@ -28,7 +28,7 @@
             for (var j = 0; j < take; j++) {
                 var s = list[idx + j], ang = take === 1 ? 225 : 180 + 90 * j / (take - 1);
                 var b = document.createElement('button'); b.className = 'btn item';
-                b.setAttribute('aria-label', '播放 ' + s.name); b.title = s.name;
+                b.setAttribute('aria-label', F.t('list.play', { name: s.name })); b.title = s.name;
                 b.style.setProperty('--a', ang + 'deg');
                 b.style.setProperty('--r', rr + 'px');
                 b.style.setProperty('--i', k++);
@@ -43,7 +43,7 @@
             idx += take; r++;
         }
         var more = F.$('#more'), left = n - idx;
-        more.textContent = left > 0 ? '還有 ' + left + ' 個沒顯示,請取消勾選一些' : '';
+        more.textContent = left > 0 ? F.t('more', { n: left }) : '';
         more.classList.toggle('show', left > 0);
     };
 
@@ -73,9 +73,10 @@
         try { seen = !!localStorage.getItem('fahhh_seen'); } catch (err) { }
         if (seen) return;
         hint = document.createElement('div');
-        hint.id = 'hint'; hint.setAttribute('role', 'note'); hint.textContent = '點我展開你裝備的迷因';
+        hint.id = 'hint'; hint.setAttribute('role', 'note'); hint.textContent = F.t('hint');
         hint.addEventListener('pointerdown', function (e) { e.preventDefault(); dismissHint(); });
         dock.appendChild(hint);
+        F.onLang(function () { if (hint) hint.textContent = F.t('hint'); });
         fab.classList.add('nudge');
         fab.addEventListener('animationend', function () { fab.classList.remove('nudge'); });
     })();

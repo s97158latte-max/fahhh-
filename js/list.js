@@ -7,7 +7,7 @@
         var nm = row.querySelector('.nm'), done = false;
         var inp = document.createElement('input');
         inp.type = 'text'; inp.className = 'nm-edit'; inp.maxLength = 14; inp.value = s.name;
-        inp.setAttribute('aria-label', '重新命名 ' + s.name);
+        inp.setAttribute('aria-label', F.t('list.rename', { name: s.name }));
         nm.replaceWith(inp); inp.focus(); inp.select();
         /* 編輯中按列內其他按鈕:阻止 mousedown 的焦點轉移,輸入框不 blur、不被提前重繪,click 才能正常送達 */
         var L = F.$('#list');
@@ -31,10 +31,10 @@
         var L = F.$('#list'); L.innerHTML = '';
         F.all().forEach(function (s) {
             var row = document.createElement('div'); row.className = 'row';
-            row.innerHTML = '<button class="btn play" aria-label="' + F.esc('播放 ' + s.name) + '">' + (s.emo || '🎵') + '</button><div class="nm">' + F.esc(s.name) + '</div>' +
-                (s.fn || s.lock ? '' : '<button class="btn ren" aria-label="' + F.esc('重新命名 ' + s.name) + '">✏️</button>') +
-                (s.fn || s.lock ? '' : '<button class="btn del" aria-label="' + F.esc('刪除 ' + s.name) + '">🗑</button>') +
-                '<label class="eq"><input type="checkbox"' + (F.eq.indexOf(s.id) > -1 ? ' checked' : '') + '><b></b>裝備</label>';
+            row.innerHTML = '<button class="btn play" aria-label="' + F.esc(F.t('list.play', { name: s.name })) + '">' + (s.emo || '🎵') + '</button><div class="nm">' + F.esc(s.name) + '</div>' +
+                (s.fn || s.lock ? '' : '<button class="btn ren" aria-label="' + F.esc(F.t('list.rename', { name: s.name })) + '">✏️</button>') +
+                (s.fn || s.lock ? '' : '<button class="btn del" aria-label="' + F.esc(F.t('list.delete', { name: s.name })) + '">🗑</button>') +
+                '<label class="eq"><input type="checkbox"' + (F.eq.indexOf(s.id) > -1 ? ' checked' : '') + '><b></b>' + F.esc(F.t('list.equip')) + '</label>';
             var p = row.querySelector('.play');
             p.addEventListener('click', function () { F.play(s, p); });
             row.querySelector('input').addEventListener('change', function (e) {
@@ -53,13 +53,19 @@
         });
     };
     /* ---------- 刪除可復原 ---------- */
-    var pend = null, bar = null;
+    var pend = null, bar = null, barText = null;
     function commitPending() {
         if (!pend) return;
         clearTimeout(pend.timer); F.dbDel(pend.s.id);
         pend = null;
         if (bar) bar.hidden = true;
     }
+    /* 語言切換時，仍在顯示的復原提示條直接換字 */
+    F.onLang(function () {
+        if (!barText || !bar || bar.hidden) return;
+        barText.m.textContent = F.t('undo.msg', { name: barText.name });
+        barText.u.textContent = F.t('undo.btn');
+    });
     function ensureBar() {
         if (bar) return bar;
         bar = document.createElement('div'); bar.id = 'undoBar';
@@ -77,8 +83,9 @@
         rec.timer = setTimeout(function () { if (pend === rec) commitPending(); }, 6000);
         pend = rec;
         var b = ensureBar(); b.innerHTML = '';
-        var m = document.createElement('span'); m.textContent = '已刪除「' + s.name + '」';
-        var u = document.createElement('button'); u.type = 'button'; u.className = 'btn'; u.textContent = '復原';
+        var m = document.createElement('span'); m.textContent = F.t('undo.msg', { name: s.name });
+        var u = document.createElement('button'); u.type = 'button'; u.className = 'btn'; u.textContent = F.t('undo.btn');
+        barText = { m: m, u: u, name: s.name };
         u.addEventListener('click', function () {
             if (pend !== rec) return;
             clearTimeout(rec.timer); pend = null; b.hidden = true;

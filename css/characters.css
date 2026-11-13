@@ -36,3 +36,13 @@ html{overflow-x:hidden}
  #wjA{width:clamp(96px,calc((100vw - 1240px)/2 - 20px),280px)}
  #wjB{width:clamp(80px,calc((100vw - 1240px)/2 - 64px),230px)}
 }
+/* 深色:人物不反相,改成白底手繪圓角貼紙(border-box 沿用原寬度,padding 讓線稿不貼邊);灰色硬陰影在黑底上襯出厚度 */
+@media (prefers-color-scheme:dark){
+ .wj{background:#fff;padding:5px;box-shadow:3px 3px 0 #777}
+ #wjB{border-radius:40px 12px 36px 12px/12px 36px 12px 40px}
+ #wjA{border-radius:12px 40px 12px 36px/36px 12px 40px 12px}
+ @media (max-width:819px){#wjB{-webkit-mask-image:none;mask-image:none}}
+ /* 貼紙多出的旋轉角與陰影:兩側人物再各縮 16px,與內容欄保留間隙 */
+ @media (min-width:1200px) and (max-width:1399px){#wjA{width:clamp(96px,calc((100vw - 960px)/2 - 36px),280px)}#wjB{width:clamp(80px,calc((100vw - 960px)/2 - 72px),230px)}}
+ @media (min-width:1500px){#wjA{width:clamp(96px,calc((100vw - 1240px)/2 - 36px),280px)}#wjB{width:clamp(80px,calc((100vw - 1240px)/2 - 80px),230px)}}
+}

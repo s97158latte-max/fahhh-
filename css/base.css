@@ -109,5 +109,5 @@ svg [fill="#fff"]{fill:var(--bg)}
 .t-ic svg [fill="#000"]{fill:var(--tour-i)}
 /* ---------- 深色模式:跟隨系統外觀,黑白反相版 ---------- */
 @media (prefers-color-scheme:dark){
-:root{--muted:#aaa;--bg:#000;--fg:#fff;--line:#fff;--panel:#0d0d0d;--shadow:#fff;--scrim:rgba(0,0,0,.72);--veil:rgba(0,0,0,.85);--dim:rgba(0,0,0,.78);--ttl-filter:drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff);--wj-filter:invert(1);--wj-blend:screen}
+:root{--muted:#aaa;--bg:#000;--fg:#fff;--line:#fff;--panel:#0d0d0d;--shadow:#fff;--scrim:rgba(0,0,0,.72);--veil:rgba(0,0,0,.85);--dim:rgba(0,0,0,.78);--ttl-filter:drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff);--wj-filter:none;--wj-blend:normal}
 }

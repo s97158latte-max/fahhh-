@@ -71,6 +71,7 @@ css/
 
 js/
   boot.js             載入畫面（放在 <head>，同步執行）
+  fonts.js            把非阻塞載入的 Google Fonts 樣式表（media="print"）切換為 all
   util.js             共用小工具（F.$、F.esc）
   i18n.js             中英文字典與語言切換
   feedback.js         播放時的震動、字泡、播放中狀態

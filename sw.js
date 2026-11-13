@@ -15,7 +15,7 @@ var CACHE = 'fahhh-v2';
 var CORE_ASSETS = [
     './', 'index.html',
     'css/base.css', 'css/boot.css', 'css/dock.css', 'css/characters.css', 'css/tour.css',
-    'js/audio.js', 'js/boot.js', 'js/feedback.js', 'js/hints.js', 'js/i18n.js', 'js/list.js', 'js/main.js', 'js/keys.js', 'js/menu.js', 'js/sounds.js', 'js/storage.js', 'js/tour.js', 'js/upload.js', 'js/util.js'
+    'js/audio.js', 'js/boot.js', 'js/fonts.js', 'js/feedback.js', 'js/hints.js', 'js/i18n.js', 'js/list.js', 'js/main.js', 'js/keys.js', 'js/menu.js', 'js/sounds.js', 'js/storage.js', 'js/tour.js', 'js/upload.js', 'js/util.js'
 ];
 
 // 盡力而為：失敗不影響 install，之後被請求時會由 fetch 流程補進快取。

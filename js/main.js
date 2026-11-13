@@ -10,3 +10,13 @@
         F.renderList(); F.renderMenu(); F.custom.forEach(F.loadBuf);
     });
 })(window.Fahhh);
+
+/* ---------- PWA：註冊 service worker ---------- */
+try {
+    if ('serviceWorker' in navigator &&
+        (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('sw.js').catch(function () { });
+        });
+    }
+} catch (e) { }

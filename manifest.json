@@ -2,7 +2,7 @@
   "id": "./",
   "name": "fahhh! 迷因音效按鈕",
   "short_name": "fahhh!",
-  "description": "迷因音效按鈕與迷因總資料庫 Meme Soundboard",
+  "description": "迷因音效按鈕與迷因總資料庫 Meme Soundboard，created by 邊境部署 EdgeDeploy",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

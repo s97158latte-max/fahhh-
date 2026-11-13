@@ -8,7 +8,7 @@
     // 「.one」是 n === 1 時的單數形（中文與基底相同）。內建音效名稱與使用者自訂名稱不在此翻譯。
     var DICT = {
         zh: {
-            'title': 'fahhh! 迷因音效按鈕｜Meme Soundboard 迷因總資料庫',
+            'title': 'fahhh! 迷因音效按鈕｜Meme Soundboard｜created by 邊境部署 EdgeDeploy',
             'sub1': '迷因總資料庫。勾選「裝備」，右下角的小白點就會長出那顆按鈕 (╥﹏╥)',
             'sub2': '沒聲音？先檢查 iPhone 側邊的靜音鍵和音量',
             'note': '(;´Д`) 音檔只存在這個瀏覽器；iPhone 的「主畫面 App」和 Safari 各自獨立，加入主畫面後要重新上傳。',
@@ -45,13 +45,13 @@
             'upload.readfail': '讀取失敗的檔案'
         },
         en: {
-            'title': 'fahhh! meme soundboard | The meme sound library',
+            'title': 'fahhh! meme soundboard | created by 邊境部署 EdgeDeploy',
             'sub1': 'The meme sound library. Tick “Equip” and the little white dot at the bottom right will sprout that button (╥﹏╥)',
             'sub2': 'No sound? Check your iPhone’s silent switch and volume first',
             'note': '(;´Д`) Your sounds only live in this browser. On iPhone, the Home Screen app and Safari don’t share them, so you’ll need to re-upload after adding to the Home Screen.',
             'upload.btn': '+ Upload a new meme',
             'credit': 'created by',
-            'brand': 'EdgeDeploy',
+            'brand': '邊境部署 EdgeDeploy',
             'lang.btn': '中',
             'lang.aria': 'Switch to Chinese',
             'fab.aria': 'Meme quick menu',

@@ -9,7 +9,7 @@
  *   使用者開啟頁面時會先看到快取版本，同時背景抓取新版並更新快取，下次開啟即為新版。
  *   SW 更新快取後不會自動重整頁面。
  */
-var CACHE = 'fahhh-v1';
+var CACHE = 'fahhh-v2';
 
 // 核心：任何一個失敗都讓 install 失敗（瀏覽器之後會重試）。
 var CORE_ASSETS = [
@@ -23,7 +23,7 @@ var OPTIONAL_ASSETS = [
     'manifest.json',
     'audio/fahhh.m4a',
     'images/edgedeploy-horizontal-blue.png', 'images/wjA.png', 'images/wjB.png',
-    'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'icons/favicon.png', 'icons/favicon.ico'
+    'icons/logo.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'icons/favicon.png', 'icons/favicon.ico'
 ];
 
 // 快取鍵去掉 query/hash，配合 ignoreSearch 讓同一資源只有一份。

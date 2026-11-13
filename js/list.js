@@ -5,8 +5,8 @@
         var L = F.$('#list'); L.innerHTML = '';
         F.all().forEach(function (s) {
             var row = document.createElement('div'); row.className = 'row';
-            row.innerHTML = '<button class="btn play">' + (s.emo || '🎵') + '</button><div class="nm">' + F.esc(s.name) + '</div>' +
-                (s.fn || s.lock ? '' : '<button class="btn del">🗑</button>') +
+            row.innerHTML = '<button class="btn play" aria-label="' + F.esc('播放 ' + s.name) + '">' + (s.emo || '🎵') + '</button><div class="nm">' + F.esc(s.name) + '</div>' +
+                (s.fn || s.lock ? '' : '<button class="btn del" aria-label="' + F.esc('刪除 ' + s.name) + '">🗑</button>') +
                 '<label class="eq"><input type="checkbox"' + (F.eq.indexOf(s.id) > -1 ? ' checked' : '') + '><b></b>裝備</label>';
             var p = row.querySelector('.play');
             p.addEventListener('pointerdown', function (e) { e.preventDefault(); F.play(s, p); });

@@ -45,6 +45,7 @@
         if (curAudio) {
             var a = curAudio; curAudio = null;
             try { a.pause(); a.currentTime = 0; } catch (e) { }
+            if (a._revoke) a._revoke();
         }
     }
     function begin(c) {
@@ -81,9 +82,10 @@
     }
 
     function loadBuf(s) {
-        if (!s.data || F.buf[s.id]) return;
+        if ((!s.data && !s.buf) || F.buf[s.id]) return;
         var c = getCtx();
-        fetch(s.data).then(function (r) { return r.arrayBuffer(); })
+        /* 新紀錄存 ArrayBuffer:解碼用複本(decodeAudioData 會 detach 原 buffer);舊紀錄為 data URL */
+        (s.buf ? Promise.resolve(s.buf.slice(0)) : fetch(s.data).then(function (r) { return r.arrayBuffer(); }))
             .then(function (ab) { return new Promise(function (ok, no) { var p = c.decodeAudioData(ab, ok, no); if (p && p.then) p.then(ok, no); }); })
             .then(function (b) { F.buf[s.id] = b; }).catch(function () { F.buf[s.id] = null; });
     }
@@ -114,7 +116,16 @@
         var b = F.buf[s.id];
         if (b) playBuf(c, b);
         else {
-            try { var a = new Audio(s.data); curAudio = a; a.play().catch(function () { }); } catch (e) { }
+            try {
+                var url = s.buf ? URL.createObjectURL(new Blob([s.buf], { type: s.type || 'audio/mpeg' })) : s.data;
+                var a = new Audio(url); curAudio = a;
+                if (s.buf) {
+                    var done = false;
+                    a._revoke = function () { if (done) return; done = true; try { URL.revokeObjectURL(url); } catch (e) { } };
+                    a.onended = a.onerror = a._revoke;
+                }
+                a.play().catch(function () { });
+            } catch (e) { }
             loadBuf(s);
         }
     }

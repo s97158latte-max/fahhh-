@@ -19,9 +19,9 @@
         }, 6000);
     }
     // 驗證可解碼且不超過長度上限;成功回傳 { buf },失敗回傳 { err: 'bad' | 'long' }
-    function validateAudio(file, dataUrl) {
-        return fetch(dataUrl).then(function (r) { return r.arrayBuffer(); })
-            .then(function (ab) { return new Promise(function (ok, no) { var p = F.getCtx().decodeAudioData(ab, ok, no); if (p && p.then) p.then(ok, no); }); })
+    // decodeAudioData 會 detach 傳入的 ArrayBuffer,所以解碼用複本,原始 ab 留給資料庫儲存
+    function validateAudio(file, ab) {
+        return new Promise(function (ok, no) { var p = F.getCtx().decodeAudioData(ab.slice(0), ok, no); if (p && p.then) p.then(ok, no); })
             .then(function (b) { return b.duration > MAX_SEC ? { err: 'long' } : { buf: b }; },
                 function () { return { err: 'bad' }; });
     }
@@ -40,12 +40,12 @@
                 var f = ok[i];
                 say(['正在加入 ' + (i + 1) + '/' + ok.length + '…'], true);
                 if (f.size > MAX_BYTES) { big.push(f); continue; }
-                var data = await new Promise(function (res, rej) { var fr = new FileReader(); fr.onload = function () { res(fr.result); }; fr.onerror = function () { rej(fr.error); }; fr.readAsDataURL(f); });
-                var v = await validateAudio(f, data);
+                var ab = await (f.arrayBuffer ? f.arrayBuffer() : new Promise(function (res, rej) { var fr = new FileReader(); fr.onload = function () { res(fr.result); }; fr.onerror = function () { rej(fr.error); }; fr.readAsArrayBuffer(f); }));
+                var v = await validateAudio(f, ab);
                 if (v.err) { (v.err === 'long' ? long_ : bad).push(f); continue; }
                 var full = f.name.replace(/\.[^.]+$/, ''), name = full.slice(0, NAME_MAX);
                 if (name !== full) cut.push(name);
-                var s = { id: 'c' + Date.now() + Math.random().toString(36).slice(2, 6), name: name, data: data };
+                var s = { id: 'c' + Date.now() + Math.random().toString(36).slice(2, 6), name: name, buf: ab, type: f.type || '' };
                 F.custom.push(s); F.dbPut(s); F.eq.push(s.id); F.buf[s.id] = v.buf;
                 added++;
             }
